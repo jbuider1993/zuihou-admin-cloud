@@ -108,12 +108,9 @@ zuul:
     file:
       path: /file/**
       serviceId: zuihou-file-server
-    mail:
-      path: /mail/**
-      serviceId: zuihou-mail-server
-    sms:
-      path: /sms/**
-      serviceId: zuihou-sms-server
+    msgs:
+      path: /msgs/**
+      serviceId: zuihou-msgs-server
 
 # 网关忽略拦截前缀（自定义）
 gateway:
