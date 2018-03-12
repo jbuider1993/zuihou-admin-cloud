@@ -16,9 +16,8 @@
     <modules>
         <module>zuihou-base</module>
         <module>zuihou-admin</module>
-        <module>zuihou-mail</module>
+        <module>zuihou-msgs</module>
         <module>zuihou-file</module>
-        <module>zuihou-sms</module>
         <module>zuihou-gateway</module>
         <module>zuihou-auth</module>
     </modules>
