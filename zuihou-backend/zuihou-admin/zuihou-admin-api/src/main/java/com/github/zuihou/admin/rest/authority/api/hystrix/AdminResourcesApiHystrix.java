@@ -3,9 +3,6 @@ package com.github.zuihou.admin.rest.authority.api.hystrix;
 import com.github.pagehelper.PageInfo;
 import com.github.zuihou.admin.rest.authority.api.AdminResourcesApi;
 import com.github.zuihou.admin.rest.authority.dto.MenuDTO;
-import com.github.zuihou.admin.rest.authority.dto.MenuGroupDTO;
-import com.github.zuihou.admin.rest.authority.dto.MenuGroupSaveReqDTO;
-import com.github.zuihou.admin.rest.authority.dto.MenuGroupUpdateReqDTO;
 import com.github.zuihou.admin.rest.authority.dto.MenuSaveDTO;
 import com.github.zuihou.admin.rest.authority.dto.MenuTreeDTO;
 import com.github.zuihou.admin.rest.authority.dto.MenuUpdateDTO;
@@ -25,30 +22,6 @@ import java.util.List;
  */
 @Component
 public class AdminResourcesApiHystrix implements AdminResourcesApi {
-    @Override
-    public Result<MenuGroupDTO> groupGet(Long id) {
-        return Result.timeout();
-    }
-
-    @Override
-    public Result<List<MenuGroupDTO>> listGroup() {
-        return Result.timeout();
-    }
-
-    @Override
-    public Result<MenuGroupDTO> groupSave(MenuGroupSaveReqDTO menuDto) {
-        return Result.timeout();
-    }
-
-    @Override
-    public Result<Boolean> groupUpdate(MenuGroupUpdateReqDTO menuDto) {
-        return Result.timeout();
-    }
-
-    @Override
-    public Result<Boolean> groupRemove(Long id) {
-        return Result.timeout();
-    }
 
     @Override
     public Result<MenuDTO> get(Long id) {

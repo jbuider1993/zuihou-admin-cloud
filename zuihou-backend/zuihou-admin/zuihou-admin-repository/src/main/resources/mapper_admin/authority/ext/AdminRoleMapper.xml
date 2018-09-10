@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.github.zuihou.admin.repository.authority.dao.AdminRoleMapper">
+<mapper namespace="com.github.zuihou.admin.repository.authority.dao.RoleMapper">
   <sql id="R_Column_List">
     r.id, r.app_id, r.code, r.name, r.is_enable, r.is_delete, r.description, r.create_user, r.create_time,
     r.update_user, r.update_time

@@ -1,17 +1,24 @@
 package com.github.zuihou.admin.repository.authority.service.impl;
 
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import com.github.zuihou.admin.constant.ResourcesType;
-import com.github.zuihou.admin.entity.authority.po.AdminResources;
-import com.github.zuihou.admin.entity.authority.po.AdminRole;
-import com.github.zuihou.admin.entity.authority.po.ApplicationRole;
+import com.github.zuihou.admin.entity.authority.po.Resources;
+import com.github.zuihou.admin.entity.authority.po.Role;
+import com.github.zuihou.admin.entity.authority.po.RoleApplication;
 import com.github.zuihou.admin.entity.authority.po.RoleResource;
-import com.github.zuihou.admin.repository.authority.dao.AdminResourcesMapper;
-import com.github.zuihou.admin.repository.authority.dao.AdminRoleMapper;
-import com.github.zuihou.admin.repository.authority.dao.ApplicationRoleMapper;
+import com.github.zuihou.admin.repository.authority.dao.ResourcesMapper;
+import com.github.zuihou.admin.repository.authority.dao.RoleApplicationMapper;
+import com.github.zuihou.admin.repository.authority.dao.RoleMapper;
 import com.github.zuihou.admin.repository.authority.dao.RoleResourceMapper;
-import com.github.zuihou.admin.repository.authority.example.AdminResourcesExample;
-import com.github.zuihou.admin.repository.authority.example.AdminRoleExample;
-import com.github.zuihou.admin.repository.authority.example.ApplicationRoleExample;
+import com.github.zuihou.admin.repository.authority.example.ResourcesExample;
+import com.github.zuihou.admin.repository.authority.example.RoleApplicationExample;
+import com.github.zuihou.admin.repository.authority.example.RoleExample;
 import com.github.zuihou.admin.repository.authority.example.RoleResourceExample;
 import com.github.zuihou.admin.repository.authority.service.AdminRoleService;
 import com.github.zuihou.base.dao.BaseDao;
@@ -21,17 +28,11 @@ import com.github.zuihou.commons.constant.EnableStatus;
 import com.github.zuihou.commons.context.BaseContextHandler;
 import com.github.zuihou.commons.context.CommonConstants;
 import com.github.zuihou.utils.JSONUtils;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * @author zuihou
@@ -39,25 +40,25 @@ import java.util.stream.Collectors;
  */
 @Service
 @Slf4j
-public class AdminRoleServiceImpl extends BaseServiceImpl<Long, AdminRole, AdminRoleExample> implements AdminRoleService {
+public class AdminRoleServiceImpl extends BaseServiceImpl<Long, Role, RoleExample> implements AdminRoleService {
     @Autowired
-    private AdminRoleMapper adminRoleMapper;
+    private RoleMapper adminRoleMapper;
     @Autowired
     private RoleResourceMapper roleResourceMapper;
     @Autowired
-    private ApplicationRoleMapper applicationRoleMapper;
+    private RoleApplicationMapper applicationRoleMapper;
     @Autowired
-    private AdminResourcesMapper adminResourcesMapper;
+    private ResourcesMapper adminResourcesMapper;
 
     @Override
-    protected BaseDao<Long, AdminRole, AdminRoleExample> getDao() {
+    protected BaseDao<Long, Role, RoleExample> getDao() {
         return adminRoleMapper;
     }
 
 
     @Override
     public boolean check(String appId, String code) {
-        AdminRoleExample example = new AdminRoleExample();
+        RoleExample example = new RoleExample();
         example.createCriteria().andIsDeleteEqualTo(DeleteStatus.UN_DELETE.getVal())
                 .andAppIdEqualTo(appId).andCodeEqualTo(code);
         if (adminRoleMapper.countByExample(example) > 0) {
@@ -68,14 +69,13 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, AdminRole, Admin
 
     @Override
     public void authorityAdmin(String appId, Long roleId, List<Long> applicationIdList) {
-        ApplicationRoleExample example = new ApplicationRoleExample();
-        example.createCriteria().andAppIdEqualTo(appId).andRoleIdEqualTo(roleId);
+        RoleApplicationExample example = new RoleApplicationExample();
+        example.createCriteria().andRoleIdEqualTo(roleId);
         applicationRoleMapper.deleteByExample(example);
         String userName = BaseContextHandler.getUserName();
 
-        List<ApplicationRole> ruList = applicationIdList.stream().map((applicationId) -> {
-            ApplicationRole ru = new ApplicationRole();
-            ru.setAppId(appId);
+        List<RoleApplication> ruList = applicationIdList.stream().map((applicationId) -> {
+            RoleApplication ru = new RoleApplication();
             ru.setApplicationsId(applicationId);
             ru.setRoleId(roleId);
             ru.setCreateTime(new Date());
@@ -98,12 +98,12 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, AdminRole, Admin
 
         //删除该角色，该菜单组的所有权限
         RoleResourceExample raExample = new RoleResourceExample();
-        raExample.createCriteria().andAppIdEqualTo(appId).andRoleIdEqualTo(roleId);
+        raExample.createCriteria().andRoleIdEqualTo(roleId);
         roleResourceMapper.deleteByExample(raExample);
 
         //id=1 的 子菜单是id=2 ,授权时，勾选了菜单2，那么菜单1也必须被授权
         //以下代码就是重新计算具有层级关系的菜单和资源
-        AdminResourcesExample rExample = new AdminResourcesExample();
+        ResourcesExample rExample = new ResourcesExample();
         rExample.createCriteria().andAppIdEqualTo(appId)
                 .andIsDeleteEqualTo(DeleteStatus.UN_DELETE.getVal())
                 .andIsEnableEqualTo(EnableStatus.ENABLE.getVal())
@@ -111,13 +111,13 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, AdminRole, Admin
                         ResourcesType.URI.toString(), ResourcesType.BUTTON.toString()))
                 .andMenuGroupCodeEqualTo(menuGroupCode);
         //查询 appid + 菜单组下，所有的菜单+资源
-        List<AdminResources> resourcesList = adminResourcesMapper.selectByExample(rExample);
+        List<Resources> resourcesList = adminResourcesMapper.selectByExample(rExample);
         if (resourcesList.isEmpty()) {
             return;
         }
         //将自定菜单组的所有菜单+资源查询出来， 转换成map (key=id, value=parentId)
         Map<Long, Long> resourceIdMap = resourcesList.stream().
-                collect(Collectors.toMap(AdminResources::getId, AdminResources::getParentId));
+                collect(Collectors.toMap(Resources::getId, Resources::getParentId));
         //list 转 set 去重
         Set<Long> relationResources = elementIdList.stream().collect(Collectors.toSet());
         //计算待授权的资源id的父资源
@@ -128,7 +128,6 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, AdminRole, Admin
         List<RoleResource> raList = relationResources.stream()
                 .map((resourceId) -> {
                     RoleResource rr = new RoleResource();
-                    rr.setAppId(appId);
                     rr.setRoleId(roleId);
                     rr.setResourceId(resourceId);
                     rr.setUpdateTime(new Date());
@@ -153,7 +152,7 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, AdminRole, Admin
     }
 
     @Override
-    public List<AdminRole> findRole(String appId, Long applicationId) {
+    public List<Role> findRole(String appId, Long applicationId) {
         return adminRoleMapper.findRole(appId, applicationId);
     }
 }

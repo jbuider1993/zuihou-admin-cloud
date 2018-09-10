@@ -1,7 +1,7 @@
 package com.github.zuihou.admin.repository.authority.service;
 
-import com.github.zuihou.admin.entity.authority.po.AdminRole;
-import com.github.zuihou.admin.repository.authority.example.AdminRoleExample;
+import com.github.zuihou.admin.entity.authority.po.Role;
+import com.github.zuihou.admin.repository.authority.example.RoleExample;
 import com.github.zuihou.base.service.BaseService;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * @author zuihou
  * @createTime 2017-12-15 10:45
  */
-public interface AdminRoleService extends BaseService<Long, AdminRole, AdminRoleExample> {
+public interface AdminRoleService extends BaseService<Long, Role, RoleExample> {
     /**
      * 检测code是否存在
      * @param appId appId
@@ -42,5 +42,5 @@ public interface AdminRoleService extends BaseService<Long, AdminRole, AdminRole
      * @param applicationId 应用id
      * @return
      */
-    List<AdminRole> findRole(String appId, Long applicationId);
+    List<Role> findRole(String appId, Long applicationId);
 }

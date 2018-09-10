@@ -15,25 +15,25 @@ public class Applications extends CommonBaseEntity<Long> implements Serializable
     private String appName;
 
     /**
-     * 应用类型  system:系统管理 app:应用
+     * 应用类型   APP:应用 SERVER:服务
      *
      * @mbggenerated
      */
     private String appType;
 
     /**
-     * 启用状态 
-            1：启用
-            0：禁用
+     * 启用状态
+     1：启用
+     0：禁用
      *
      * @mbggenerated
      */
     private Boolean isEnable;
 
     /**
-     * 是否删除 
-            1：已删除
-            0：未删除
+     * 是否删除
+     1：已删除
+     0：未删除
      *
      * @mbggenerated
      */
@@ -73,6 +73,13 @@ public class Applications extends CommonBaseEntity<Long> implements Serializable
      * @mbggenerated
      */
     private String comment;
+
+    /**
+     * 是否所有人能访问 1是 0否
+     *
+     * @mbggenerated
+     */
+    private Boolean isPublic;
 
     /**
      * 排序字段
@@ -118,7 +125,7 @@ public class Applications extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 应用类型  system:系统管理 app:应用
+     * 应用类型   APP:应用 SERVER:服务
      *
      * @mbggenerated
      */
@@ -127,7 +134,7 @@ public class Applications extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 应用类型  system:系统管理 app:应用
+     * 应用类型   APP:应用 SERVER:服务
      *
      * @mbggenerated
      */
@@ -136,9 +143,9 @@ public class Applications extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 启用状态 
-            1：启用
-            0：禁用
+     * 启用状态
+     1：启用
+     0：禁用
      *
      * @mbggenerated
      */
@@ -147,9 +154,9 @@ public class Applications extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 启用状态 
-            1：启用
-            0：禁用
+     * 启用状态
+     1：启用
+     0：禁用
      *
      * @mbggenerated
      */
@@ -158,9 +165,9 @@ public class Applications extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 是否删除 
-            1：已删除
-            0：未删除
+     * 是否删除
+     1：已删除
+     0：未删除
      *
      * @mbggenerated
      */
@@ -169,9 +176,9 @@ public class Applications extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 是否删除 
-            1：已删除
-            0：未删除
+     * 是否删除
+     1：已删除
+     0：未删除
      *
      * @mbggenerated
      */
@@ -267,6 +274,24 @@ public class Applications extends CommonBaseEntity<Long> implements Serializable
      */
     public void setComment(String comment) {
         this.comment = comment == null ? null : comment.trim();
+    }
+
+    /**
+     * 是否所有人能访问 1是 0否
+     *
+     * @mbggenerated
+     */
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+
+    /**
+     * 是否所有人能访问 1是 0否
+     *
+     * @mbggenerated
+     */
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
     }
 
     /**

@@ -33,9 +33,14 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     private ArrayList<String> getExcludeCommonPathPatterns() {
         ArrayList<String> list = new ArrayList<>();
         String[] urls = {
+                "/error",
+                "/login",
+                "/p/login/**",
                 "/v2/api-docs",
                 "/swagger-resources/**",
-                "/cache/**"
+                "/cache/**",
+                "/webjars/**",
+                "/swagger-ui.html**",
         };
         Collections.addAll(list, urls);
         return list;

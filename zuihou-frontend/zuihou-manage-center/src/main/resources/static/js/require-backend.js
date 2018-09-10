@@ -2,7 +2,7 @@ require.config({
     urlArgs: "v=" + requirejs.s.contexts._.config.config.site.version,
     packages: [{
             name: 'moment',
-            location: '/static/libs/moment',
+            location: '/zuihou-center/static/libs/moment',
             main: 'moment'
         }],
     //在打包压缩时将会把include中的模块合并到主文件中
@@ -22,32 +22,32 @@ require.config({
         'bootstrap-table-template': 'bootstrap-table-template',
         //
         // 以下的包从bower的libs目录加载
-        'jquery': '/static/libs/jquery/dist/jquery.min',
-        'bootstrap': '/static/libs/bootstrap/dist/js/bootstrap.min',
-        'bootstrap-datetimepicker': '/static/libs/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
-        'bootstrap-select': '/static/libs/bootstrap-select/dist/js/bootstrap-select.min',
-        'bootstrap-select-lang': '/static/libs/bootstrap-select/dist/js/i18n/defaults-zh_CN',
-        'bootstrap-table': '/static/libs/bootstrap-table/dist/bootstrap-table.min',
-        'bootstrap-table-export': '/static/libs/bootstrap-table/dist/extensions/export/bootstrap-table-export.min',
-        'bootstrap-table-mobile': '/static/libs/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile',
-        'bootstrap-table-lang': '/static/libs/bootstrap-table/dist/locale/bootstrap-table-zh-CN',
-        'tableexport': '/static/libs/tableExport.jquery.plugin/tableExport.min',
-        'dragsort': '/static/libs/dragsort/jquery.dragsort',
-        'qrcode': '/static/libs/jquery-qrcode/jquery.qrcode.min',
-        'sortable': '/static/libs/Sortable/Sortable.min',
-        'addtabs': '/static/libs/jquery-addtabs/jquery.addtabs',
-        'slimscroll': '/static/libs/jquery-slimscroll/jquery.slimscroll',
-        'summernote': '/static/libs/summernote/dist/lang/summernote-zh-CN.min',
-        'validator-core': '/static/libs/nice-validator/dist/jquery.validator',
-        'validator-lang': '/static/libs/nice-validator/dist/local/zh-CN',
-        'plupload': '/static/libs/plupload/js/plupload.min',
-        'toastr': '/static/libs/toastr/toastr',
-        'jstree': '/static/libs/jstree/dist/jstree.min',
-        'layer': '/static/libs/layer/src/layer',
-        'cookie': '/static/libs/jquery.cookie/jquery.cookie',
-        'cxselect': '/static/libs/jquery-cxselect/js/jquery.cxselect',
-        'template': '/static/libs/art-template/dist/template-native',
-        'selectpage': '/static/libs/selectpage/selectpage',
+        'jquery': '/zuihou-center/static/libs/jquery/dist/jquery.min',
+        'bootstrap': '/zuihou-center/static/libs/bootstrap/dist/js/bootstrap.min',
+        'bootstrap-datetimepicker': '/zuihou-center/static/libs/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min',
+        'bootstrap-select': '/zuihou-center/static/libs/bootstrap-select/dist/js/bootstrap-select.min',
+        'bootstrap-select-lang': '/zuihou-center/static/libs/bootstrap-select/dist/js/i18n/defaults-zh_CN',
+        'bootstrap-table': '/zuihou-center/static/libs/bootstrap-table/dist/bootstrap-table.min',
+        'bootstrap-table-export': '/zuihou-center/static/libs/bootstrap-table/dist/extensions/export/bootstrap-table-export.min',
+        'bootstrap-table-mobile': '/zuihou-center/static/libs/bootstrap-table/dist/extensions/mobile/bootstrap-table-mobile',
+        'bootstrap-table-lang': '/zuihou-center/static/libs/bootstrap-table/dist/locale/bootstrap-table-zh-CN',
+        'tableexport': '/zuihou-center/static/libs/tableExport.jquery.plugin/tableExport.min',
+        'dragsort': '/zuihou-center/static/libs/dragsort/jquery.dragsort',
+        'qrcode': '/zuihou-center/static/libs/jquery-qrcode/jquery.qrcode.min',
+        'sortable': '/zuihou-center/static/libs/Sortable/Sortable.min',
+        'addtabs': '/zuihou-center/static/libs/jquery-addtabs/jquery.addtabs',
+        'slimscroll': '/zuihou-center/static/libs/jquery-slimscroll/jquery.slimscroll',
+        'summernote': '/zuihou-center/static/libs/summernote/dist/lang/summernote-zh-CN.min',
+        'validator-core': '/zuihou-center/static/libs/nice-validator/dist/jquery.validator',
+        'validator-lang': '/zuihou-center/static/libs/nice-validator/dist/local/zh-CN',
+        'plupload': '/zuihou-center/static/libs/plupload/js/plupload.min',
+        'toastr': '/zuihou-center/static/libs/toastr/toastr',
+        'jstree': '/zuihou-center/static/libs/jstree/dist/jstree.min',
+        'layer': '/zuihou-center/static/libs/layer/src/layer',
+        'cookie': '/zuihou-center/static/libs/jquery.cookie/jquery.cookie',
+        'cxselect': '/zuihou-center/static/libs/jquery-cxselect/js/jquery.cxselect',
+        'template': '/zuihou-center/static/libs/art-template/dist/template-native',
+        'selectpage': '/zuihou-center/static/libs/selectpage/selectpage',
     },
     // shim依赖配置
     shim: {
@@ -55,7 +55,7 @@ require.config({
         'bootstrap-table': {
             deps: [
                 'bootstrap',
-//                'css!/static/libs/bootstrap-table/dist/bootstrap-table.min.css'
+//                'css!/zuihou-center/static/libs/bootstrap-table/dist/bootstrap-table.min.css'
             ],
             exports: '$.fn.bootstrapTable'
         },
@@ -97,26 +97,26 @@ require.config({
         },
         'bootstrap-datetimepicker': [
             'moment/locale/zh-cn',
-//            'css!/static/libs/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
+//            'css!/zuihou-center/static/libs/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css',
         ],
-        'bootstrap-select': ['css!/static/libs/bootstrap-select/dist/css/bootstrap-select.min.css', ],
+        'bootstrap-select': ['css!/zuihou-center/static/libs/bootstrap-select/dist/css/bootstrap-select.min.css', ],
         'bootstrap-select-lang': ['bootstrap-select'],
-        'summernote': ['/static/libs/summernote/dist/summernote.min', 'css!/static/libs/summernote/dist/summernote.css'],
-//        'toastr': ['css!/static/libs/toastr/toastr.min.css'],
-        'jstree': ['css!/static/libs/jstree/dist/themes/default/style.css', ],
+        'summernote': ['/zuihou-center/static/libs/summernote/dist/summernote.min', 'css!/zuihou-center/static/libs/summernote/dist/summernote.css'],
+//        'toastr': ['css!/zuihou-center/static/libs/toastr/toastr.min.css'],
+        'jstree': ['css!/zuihou-center/static/libs/jstree/dist/themes/default/style.css', ],
         'plupload': {
-            deps: ['/static/libs/plupload/js/moxie.min'],
+            deps: ['/zuihou-center/static/libs/plupload/js/moxie.min.js'],
             exports: "plupload"
         },
-//        'layer': ['css!/static/libs/layer/build/skin/default/layer.css'],
-//        'validator-core': ['css!/static/libs/nice-validator/dist/jquery.validator.css'],
+//        'layer': ['css!/zuihou-center/static/libs/layer/build/skin/default/layer.css'],
+//        'validator-core': ['css!/zuihou-center/static/libs/nice-validator/dist/jquery.validator.css'],
         'validator-lang': ['validator-core'],
-//        'selectpage': ['css!/static/libs/selectpage/selectpage.css'],
+//        'selectpage': ['css!/zuihou-center/static/libs/selectpage/selectpage.css'],
     },
-    baseUrl: requirejs.s.contexts._.config.config.site.cdnurl + '/static/js/', //资源基础路径
+    baseUrl: requirejs.s.contexts._.config.config.site.cdnurl + 'static/js/', //资源基础路径
     map: {
         '*': {
-            'css': '/static/libs/require-css/css.min'
+            'css': '/zuihou-center/static/libs/require-css/css.min'
         }
     },
     waitSeconds: 30,

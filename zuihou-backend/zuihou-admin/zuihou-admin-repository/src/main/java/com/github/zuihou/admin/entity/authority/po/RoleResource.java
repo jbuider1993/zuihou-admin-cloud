@@ -1,28 +1,21 @@
 package com.github.zuihou.admin.entity.authority.po;
 
-import com.github.zuihou.base.entity.CommonBaseEntity;
+import com.github.zuihou.base.entity.BaseEntity;
 import java.io.Serializable;
 import java.util.Date;
 
-public class RoleResource extends CommonBaseEntity<Long> implements Serializable {
+public class RoleResource extends BaseEntity<Long> implements Serializable {
     private Long id;
 
     /**
-     * 开发者ID，提供给各个应用的设别码
-     *
-     * @mbggenerated
-     */
-    private String appId;
-
-    /**
-     * 权限Id 角色id(admin_role) 
+     * 权限Id 角色id(a_role)
      *
      * @mbggenerated
      */
     private Long roleId;
 
     /**
-     * 资源id admin_resources表
+     * 资源id a_resources表
      *
      * @mbggenerated
      */
@@ -47,25 +40,7 @@ public class RoleResource extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 开发者ID，提供给各个应用的设别码
-     *
-     * @mbggenerated
-     */
-    public String getAppId() {
-        return appId;
-    }
-
-    /**
-     * 开发者ID，提供给各个应用的设别码
-     *
-     * @mbggenerated
-     */
-    public void setAppId(String appId) {
-        this.appId = appId == null ? null : appId.trim();
-    }
-
-    /**
-     * 权限Id 角色id(admin_role) 
+     * 权限Id 角色id(a_role)
      *
      * @mbggenerated
      */
@@ -74,7 +49,7 @@ public class RoleResource extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 权限Id 角色id(admin_role) 
+     * 权限Id 角色id(a_role)
      *
      * @mbggenerated
      */
@@ -83,7 +58,7 @@ public class RoleResource extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 资源id admin_resources表
+     * 资源id a_resources表
      *
      * @mbggenerated
      */
@@ -92,7 +67,7 @@ public class RoleResource extends CommonBaseEntity<Long> implements Serializable
     }
 
     /**
-     * 资源id admin_resources表
+     * 资源id a_resources表
      *
      * @mbggenerated
      */

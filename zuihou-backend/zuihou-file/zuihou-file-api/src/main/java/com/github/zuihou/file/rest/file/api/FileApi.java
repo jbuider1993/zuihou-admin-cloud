@@ -9,7 +9,8 @@ import com.github.zuihou.file.rest.file.dto.FileUpdateDTO;
 import com.github.zuihou.file.rest.file.dto.FolderDTO;
 import com.github.zuihou.file.rest.file.dto.FolderSaveDTO;
 import com.github.zuihou.page.plugins.openapi.OpenApiReq;
-import org.springframework.cloud.netflix.feign.FeignClient;
+
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

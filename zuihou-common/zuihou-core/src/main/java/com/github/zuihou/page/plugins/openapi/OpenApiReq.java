@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author zuihou
  * @createTime 2017-12-18 14:53
  */
-public class OpenApiReq extends AbstractPageRequest implements PageRequest, Serializable {
+public class OpenApiReq<T> extends AbstractPageRequest implements PageRequest, Serializable {
     /**
      * 第几页   页码从1开始
      */
@@ -20,6 +20,7 @@ public class OpenApiReq extends AbstractPageRequest implements PageRequest, Seri
      */
     private int pageSize;
 
+    private T data;
     @Override
     public int getPageNo() {
         if (pageNo <= 0) {
@@ -42,5 +43,13 @@ public class OpenApiReq extends AbstractPageRequest implements PageRequest, Seri
 
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

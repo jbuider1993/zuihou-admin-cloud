@@ -5,7 +5,8 @@ import com.github.zuihou.admin.rest.account.dto.AccountDTO;
 import com.github.zuihou.admin.rest.account.dto.AdminDTO;
 import com.github.zuihou.admin.rest.account.dto.AdminRegisterDTO;
 import com.github.zuihou.base.Result;
-import org.springframework.cloud.netflix.feign.FeignClient;
+
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author zuihou
  * @createTime 2017-12-15 11:20
  */
-@FeignClient(name = "${zuihou.feign-server.gateway:zuihou-gateway-server}", fallback = AdminApiHystrix.class)
+@FeignClient(name = "${zuihou.feign-server.admin:zuihou-admin-server}", fallback = AdminApiHystrix.class)
 public interface AdminApi {
     /**
      * 根据用户和密码查找用户
@@ -24,14 +25,14 @@ public interface AdminApi {
      * @param passWord 明文密码
      * @return
      */
-    @RequestMapping(value = "/api/admin/admin/pwd", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/pwd", method = RequestMethod.GET)
     Result<AdminDTO> getByPwd(@RequestParam(value = "userName") String userName, @RequestParam(value = "passWord") String passWord);
     /**
      * 根据用户查找用户
      * @param userName 登录名
      * @return
      */
-    @RequestMapping(value = "/api/admin/admin", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
     Result<AdminDTO> get(@RequestParam(value = "userName") String userName);
 
     /**
@@ -39,7 +40,7 @@ public interface AdminApi {
      * @param userName
      * @return
      */
-    @RequestMapping(value = "/api/admin/admin/account/{userName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/account/{userName}", method = RequestMethod.GET)
     Result<AccountDTO> getAccount(@PathVariable(value = "userName") String userName);
 
 
@@ -48,7 +49,7 @@ public interface AdminApi {
      * @param userName 登录名
      * @return
      */
-    @RequestMapping(value = "/api/admin/admin/check", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/check", method = RequestMethod.GET)
     Result<Boolean> check(@RequestParam(value = "userName") String userName);
 
     /**
@@ -56,6 +57,6 @@ public interface AdminApi {
      * @param adminRegisterDTO 帐号注册
      * @return
      */
-    @RequestMapping(value = "/api/admin/admin/registry", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/registry", method = RequestMethod.POST)
     Result<Boolean> registry(@RequestBody AdminRegisterDTO adminRegisterDTO);
 }

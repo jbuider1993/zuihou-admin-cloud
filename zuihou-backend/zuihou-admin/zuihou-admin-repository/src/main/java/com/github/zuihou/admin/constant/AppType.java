@@ -5,8 +5,8 @@ package com.github.zuihou.admin.constant;
  * @createTime 2017-12-15 15:30
  */
 public enum AppType {
-    SYSTEM("内置系统应用"),
-    APP("第三方应用"),
+    APP("应用"),
+    SERVER("服务"),
     ;
     private String describe;
 

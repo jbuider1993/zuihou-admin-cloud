@@ -6,6 +6,7 @@ import com.github.zuihou.admin.repository.account.dao.AdminMapper;
 import com.github.zuihou.admin.repository.account.example.AdminExample;
 import com.github.zuihou.admin.repository.account.service.AdminService;
 import com.github.zuihou.base.dao.BaseDao;
+import com.github.zuihou.base.service.impl.BaseNormalServiceImpl;
 import com.github.zuihou.base.service.impl.BaseServiceImpl;
 import com.github.zuihou.commons.constant.DeleteStatus;
 import com.github.zuihou.commons.context.CommonConstants;

@@ -1,6 +1,7 @@
 package com.github.zuihou.base.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author zuihou
@@ -13,4 +14,20 @@ public abstract class BaseEntity<I extends Serializable> implements Serializable
     public abstract I getId();
 
     public abstract void setId(I id);
+
+    protected Date createTime;
+    protected Date updateTime;
+
+    public  Date getCreateTime(){
+        return this.createTime;
+    }
+    public  Date getUpdateTime(){
+        return updateTime;
+    }
+    public  void setCreateTime(Date createTime){
+        this.createTime = createTime;
+    }
+    public  void setUpdateTime(Date updateTime){
+        this.updateTime = updateTime;
+    }
 }

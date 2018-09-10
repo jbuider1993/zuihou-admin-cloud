@@ -15,6 +15,7 @@
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="logo_url" jdbcType="VARCHAR" property="logoUrl" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
+    <result column="is_public" jdbcType="BIT" property="isPublic" />
     <result column="order_num" jdbcType="INTEGER" property="orderNum" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -90,7 +91,7 @@
     @mbggenerated
     -->
     id, app_name, app_type, is_enable, is_delete, app_id, app_secret, url, logo_url, 
-    comment, order_num, create_user, create_time, update_user, update_time
+    comment, is_public, order_num, create_user, create_time, update_user, update_time
   </sql>
   <select id="selectByExample" parameterType="com.github.zuihou.admin.repository.account.example.ApplicationsExample" resultMap="BaseResultMap">
     <!--
@@ -154,13 +155,20 @@
     from a_applications
     where 1=1 and app_id = #{appId,jdbcType=VARCHAR} and id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByAppIdAndId" parameterType="java.lang.Long">
+  <select id="selectAppIdById" parameterType="java.lang.Long" resultType="java.lang.String">
+    <!--
+    @mbggenerated
+    -->
+    select app_id 
+    from a_applications
+    where 1=1 and id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--
     @mbggenerated
     -->
     delete from a_applications
     where id = #{id,jdbcType=BIGINT}
-     and app_id = #{appId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.github.zuihou.admin.repository.account.example.ApplicationsExample">
     <!--
@@ -171,11 +179,28 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <delete id="deleteByAppIdAndIds" parameterType="list">
+  <delete id="deleteByIds" parameterType="list">
     <!--
     @mbggenerated
     -->
-    delete from  a_applications where id in
+    delete from  a_applications where id in 
+    <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+      #{item}
+    </foreach> 
+  </delete>
+  <delete id="deleteByAppIdAndId" parameterType="map">
+    <!--
+    @mbggenerated
+    -->
+    delete from a_applications
+    where id = #{id,jdbcType=BIGINT}
+     and app_id = #{appId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByAppIdAndIds" parameterType="map">
+    <!--
+    @mbggenerated
+    -->
+    delete from  a_applications where id in 
     <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
       #{item}
     </foreach> 
@@ -192,7 +217,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </update>
-  <update id="removeByAppIdAndIds" parameterType="com.github.zuihou.admin.entity.account.po.Applications">
+  <update id="removeByAppIdAndIds" parameterType="map">
     <!--
     @mbggenerated
     -->
@@ -204,7 +229,16 @@
   </foreach>
      and app_id = #{appId,jdbcType=VARCHAR}
   </update>
-  <update id="removeByAppIdAndId" parameterType="com.github.zuihou.admin.entity.account.po.Applications">
+  <update id="removeByPrimaryKey" parameterType="java.lang.Long">
+    <!--
+    @mbggenerated
+    -->
+    update a_applications
+    set is_delete = 1 
+
+     where 1=1 and id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="removeByAppIdAndId" parameterType="map">
     <!--
     @mbggenerated
     -->
@@ -218,31 +252,31 @@
     <!--
     @mbggenerated
     -->
-    insert into a_applications (id, app_name, app_type,
+    insert into a_applications (id, app_name, app_type, 
       is_enable, is_delete, app_id, 
       app_secret, url, logo_url, 
-      comment, order_num, create_user, 
-      create_time, update_user, update_time
-      )
+      comment, is_public, order_num, 
+      create_user, create_time, update_user, 
+      update_time)
     values (#{id,jdbcType=BIGINT}, #{appName,jdbcType=VARCHAR}, #{appType,jdbcType=VARCHAR}, 
       #{isEnable,jdbcType=BIT}, #{isDelete,jdbcType=BIT}, #{appId,jdbcType=VARCHAR}, 
       #{appSecret,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, 
-      #{comment,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{createUser,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+      #{comment,jdbcType=VARCHAR}, #{isPublic,jdbcType=BIT}, #{orderNum,jdbcType=INTEGER}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="batchInsert" parameterType="java.util.List">
     <!--
     @mbggenerated
     -->
-    insert into a_applications (id, app_name, app_type, is_enable, is_delete, app_id, app_secret, url, logo_url, comment, order_num, create_user, create_time, update_user, update_time ) values
+    insert into a_applications (id, app_name, app_type, is_enable, is_delete, app_id, app_secret, url, logo_url, comment, is_public, order_num, create_user, create_time, update_user, update_time ) values 
     <foreach collection="list" index="index" item="item" separator=",">
       (#{item.id,jdbcType=BIGINT}, #{item.appName,jdbcType=VARCHAR}, #{item.appType,jdbcType=VARCHAR}, 
         #{item.isEnable,jdbcType=BIT}, #{item.isDelete,jdbcType=BIT}, #{item.appId,jdbcType=VARCHAR}, 
         #{item.appSecret,jdbcType=VARCHAR}, #{item.url,jdbcType=VARCHAR}, #{item.logoUrl,jdbcType=VARCHAR}, 
-        #{item.comment,jdbcType=VARCHAR}, #{item.orderNum,jdbcType=INTEGER}, #{item.createUser,jdbcType=VARCHAR}, 
-        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP}
-        )
+        #{item.comment,jdbcType=VARCHAR}, #{item.isPublic,jdbcType=BIT}, #{item.orderNum,jdbcType=INTEGER}, 
+        #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR}, 
+        #{item.updateTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.github.zuihou.admin.entity.account.po.Applications">
@@ -280,6 +314,9 @@
       </if>
       <if test="comment != null">
         comment,
+      </if>
+      <if test="isPublic != null">
+        is_public,
       </if>
       <if test="orderNum != null">
         order_num,
@@ -327,6 +364,9 @@
       </if>
       <if test="comment != null">
         #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null">
+        #{isPublic,jdbcType=BIT},
       </if>
       <if test="orderNum != null">
         #{orderNum,jdbcType=INTEGER},
@@ -390,6 +430,9 @@
       <if test="record.comment != null">
         comment = #{record.comment,jdbcType=VARCHAR},
       </if>
+      <if test="record.isPublic != null">
+        is_public = #{record.isPublic,jdbcType=BIT},
+      </if>
       <if test="record.orderNum != null">
         order_num = #{record.orderNum,jdbcType=INTEGER},
       </if>
@@ -425,6 +468,7 @@
       url = #{record.url,jdbcType=VARCHAR},
       logo_url = #{record.logoUrl,jdbcType=VARCHAR},
       comment = #{record.comment,jdbcType=VARCHAR},
+      is_public = #{record.isPublic,jdbcType=BIT},
       order_num = #{record.orderNum,jdbcType=INTEGER},
       create_user = #{record.createUser,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -433,6 +477,60 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.github.zuihou.admin.entity.account.po.Applications">
+    <!--
+    @mbggenerated
+    -->
+    update a_applications
+    <set>
+      <if test="appName != null">
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="appType != null">
+        app_type = #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null">
+        is_enable = #{isEnable,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="appSecret != null">
+        app_secret = #{appSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null">
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="isPublic != null">
+        is_public = #{isPublic,jdbcType=BIT},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByAppIdAndIdSelective" parameterType="com.github.zuihou.admin.entity.account.po.Applications">
     <!--
@@ -467,6 +565,9 @@
       <if test="comment != null">
         comment = #{comment,jdbcType=VARCHAR},
       </if>
+      <if test="isPublic != null">
+        is_public = #{isPublic,jdbcType=BIT},
+      </if>
       <if test="orderNum != null">
         order_num = #{orderNum,jdbcType=INTEGER},
       </if>
@@ -486,6 +587,28 @@
     where id = #{id,jdbcType=BIGINT}
      and app_id = #{appId,jdbcType=VARCHAR}
   </update>
+  <update id="updateByPrimaryKey" parameterType="com.github.zuihou.admin.entity.account.po.Applications">
+    <!--
+    @mbggenerated
+    -->
+    update a_applications
+    set app_name = #{appName,jdbcType=VARCHAR},
+      app_type = #{appType,jdbcType=VARCHAR},
+      is_enable = #{isEnable,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT},
+      app_id = #{appId,jdbcType=VARCHAR},
+      app_secret = #{appSecret,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      is_public = #{isPublic,jdbcType=BIT},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
   <update id="updateByAppIdAndId" parameterType="com.github.zuihou.admin.entity.account.po.Applications">
     <!--
     @mbggenerated
@@ -500,6 +623,7 @@
       url = #{url,jdbcType=VARCHAR},
       logo_url = #{logoUrl,jdbcType=VARCHAR},
       comment = #{comment,jdbcType=VARCHAR},
+      is_public = #{isPublic,jdbcType=BIT},
       order_num = #{orderNum,jdbcType=INTEGER},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

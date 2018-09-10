@@ -6,7 +6,6 @@
     @mbggenerated
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
-    <result column="app_id" jdbcType="VARCHAR" property="appId" />
     <result column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="resource_id" jdbcType="BIGINT" property="resourceId" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
@@ -82,7 +81,7 @@
     <!--
     @mbggenerated
     -->
-    id, app_id, role_id, resource_id, create_user, create_time, update_user, update_time
+    id, role_id, resource_id, create_user, create_time, update_user, update_time
   </sql>
   <select id="selectByExample" parameterType="com.github.zuihou.admin.repository.authority.example.RoleResourceExample" resultMap="BaseResultMap">
     <!--
@@ -137,22 +136,12 @@
     </if>
     limit 0,1 
   </select>
-  <select id="selectByAppIdAndId" parameterType="map" resultMap="BaseResultMap">
-    <!--
-    @mbggenerated
-    -->
-    select
-    <include refid="Base_Column_List" />
-    from a_role_resource
-    where 1=1 and app_id = #{appId,jdbcType=VARCHAR} and id = #{id,jdbcType=BIGINT}
-  </select>
-  <delete id="deleteByAppIdAndId" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--
     @mbggenerated
     -->
     delete from a_role_resource
     where id = #{id,jdbcType=BIGINT}
-     and app_id = #{appId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.github.zuihou.admin.repository.authority.example.RoleResourceExample">
     <!--
@@ -162,16 +151,6 @@
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
-  </delete>
-  <delete id="deleteByAppIdAndIds" parameterType="list">
-    <!--
-    @mbggenerated
-    -->
-    delete from  a_role_resource where id in
-    <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
-      #{item}
-    </foreach> 
-     and app_id = #{appId,jdbcType=VARCHAR}
   </delete>
   <update id="removeByExample" parameterType="com.github.zuihou.admin.entity.authority.po.RoleResource">
     <!--
@@ -184,19 +163,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </update>
-  <update id="removeByAppIdAndIds" parameterType="com.github.zuihou.admin.entity.authority.po.RoleResource">
-    <!--
-    @mbggenerated
-    -->
-    update a_role_resource
-    set is_delete = 1 
- where 1=1 and id in 
- <foreach collection="list" open="(" close=")" index="index" item="item" separator=",">
-    #{item}
-  </foreach>
-     and app_id = #{appId,jdbcType=VARCHAR}
-  </update>
-  <update id="removeByAppIdAndId" parameterType="com.github.zuihou.admin.entity.authority.po.RoleResource">
+  <update id="removeByPrimaryKey" parameterType="java.lang.Long">
     <!--
     @mbggenerated
     -->
@@ -204,28 +171,27 @@
     set is_delete = 1 
 
      where 1=1 and id = #{id,jdbcType=BIGINT}
-     and app_id = #{appId,jdbcType=VARCHAR}
   </update>
   <insert id="insert" parameterType="com.github.zuihou.admin.entity.authority.po.RoleResource">
     <!--
     @mbggenerated
     -->
-    insert into a_role_resource (id, app_id, role_id,
-      resource_id, create_user, create_time, 
-      update_user, update_time)
-    values (#{id,jdbcType=BIGINT}, #{appId,jdbcType=VARCHAR}, #{roleId,jdbcType=BIGINT}, 
-      #{resourceId,jdbcType=BIGINT}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into a_role_resource (id, role_id, resource_id, 
+      create_user, create_time, update_user, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{resourceId,jdbcType=BIGINT}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="batchInsert" parameterType="java.util.List">
     <!--
     @mbggenerated
     -->
-    insert into a_role_resource (id, app_id, role_id, resource_id, create_user, create_time, update_user, update_time ) values
+    insert into a_role_resource (id, role_id, resource_id, create_user, create_time, update_user, update_time ) values 
     <foreach collection="list" index="index" item="item" separator=",">
-      (#{item.id,jdbcType=BIGINT}, #{item.appId,jdbcType=VARCHAR}, #{item.roleId,jdbcType=BIGINT}, 
-        #{item.resourceId,jdbcType=BIGINT}, #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, 
-        #{item.updateUser,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP})
+      (#{item.id,jdbcType=BIGINT}, #{item.roleId,jdbcType=BIGINT}, #{item.resourceId,jdbcType=BIGINT}, 
+        #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR}, 
+        #{item.updateTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.github.zuihou.admin.entity.authority.po.RoleResource">
@@ -236,9 +202,6 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="appId != null">
-        app_id,
       </if>
       <if test="roleId != null">
         role_id,
@@ -262,9 +225,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=BIGINT},
-      </if>
-      <if test="appId != null">
-        #{appId,jdbcType=VARCHAR},
       </if>
       <if test="roleId != null">
         #{roleId,jdbcType=BIGINT},
@@ -304,9 +264,6 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.appId != null">
-        app_id = #{record.appId,jdbcType=VARCHAR},
-      </if>
       <if test="record.roleId != null">
         role_id = #{record.roleId,jdbcType=BIGINT},
       </if>
@@ -336,7 +293,6 @@
     -->
     update a_role_resource
     set id = #{record.id,jdbcType=BIGINT},
-      app_id = #{record.appId,jdbcType=VARCHAR},
       role_id = #{record.roleId,jdbcType=BIGINT},
       resource_id = #{record.resourceId,jdbcType=BIGINT},
       create_user = #{record.createUser,jdbcType=VARCHAR},
@@ -347,15 +303,12 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByAppIdAndIdSelective" parameterType="com.github.zuihou.admin.entity.authority.po.RoleResource">
+  <update id="updateByPrimaryKeySelective" parameterType="com.github.zuihou.admin.entity.authority.po.RoleResource">
     <!--
     @mbggenerated
     -->
     update a_role_resource
     <set>
-      <if test="appId != null">
-        app_id = #{appId,jdbcType=VARCHAR},
-      </if>
       <if test="roleId != null">
         role_id = #{roleId,jdbcType=BIGINT},
       </if>
@@ -376,21 +329,18 @@
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
-     and app_id = #{appId,jdbcType=VARCHAR}
   </update>
-  <update id="updateByAppIdAndId" parameterType="com.github.zuihou.admin.entity.authority.po.RoleResource">
+  <update id="updateByPrimaryKey" parameterType="com.github.zuihou.admin.entity.authority.po.RoleResource">
     <!--
     @mbggenerated
     -->
     update a_role_resource
-    set app_id = #{appId,jdbcType=VARCHAR},
-      role_id = #{roleId,jdbcType=BIGINT},
+    set role_id = #{roleId,jdbcType=BIGINT},
       resource_id = #{resourceId,jdbcType=BIGINT},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_user = #{updateUser,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
-     and app_id = #{appId,jdbcType=VARCHAR}
   </update>
 </mapper>

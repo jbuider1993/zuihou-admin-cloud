@@ -8,12 +8,12 @@ import com.github.zuihou.admin.rest.authority.dto.AdminRoleSaveDTO;
 import com.github.zuihou.admin.rest.authority.dto.AdminRoleUpdateDTO;
 import com.github.zuihou.base.Result;
 import com.github.zuihou.page.plugins.openapi.OpenApiReq;
-import org.springframework.cloud.netflix.feign.FeignClient;
+
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * api 中的 RequestMapping 影响消费者
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author zuihou
  * @createTime 2017-12-08 16:07
  */
-@FeignClient(name = "${zuihou.feign-server.gateway:zuihou-gateway-server}", fallback = AdminRoleApiHystrix.class)
+@FeignClient(name = "${zuihou.feign-server.admin:zuihou-admin-server}", fallback = AdminRoleApiHystrix.class)
 public interface AdminRoleApi {
 
     /**
@@ -34,10 +34,10 @@ public interface AdminRoleApi {
      * @param id
      * @return
      */
-    @RequestMapping(value = "/api/admin/role/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/role/{id}", method = RequestMethod.GET)
     Result<AdminRoleDTO> getRoleByAppIdAndId(@PathVariable(value = "id") Long id);
 
-    @RequestMapping(value = "/api/admin/role/code/{code}", method = RequestMethod.GET)
+    @RequestMapping(value = "/role/code/{code}", method = RequestMethod.GET)
     Result<AdminRoleDTO> getRoleByAppIdAndCode(@PathVariable(value = "code") String code);
 
     /**
@@ -45,16 +45,16 @@ public interface AdminRoleApi {
      *
      * @return
      */
-    @RequestMapping(value = "/api/admin/role/page", method = RequestMethod.GET)
+    @RequestMapping(value = "/role/page", method = RequestMethod.GET)
     Result<PageInfo<AdminRoleDTO>> page(OpenApiReq openApiReq, AdminRolePageReqDTO rolePageReqDto);
 
-    @RequestMapping(value = "/api/admin/role", method = RequestMethod.POST)
+    @RequestMapping(value = "/role", method = RequestMethod.POST)
     Result<AdminRoleDTO> save(@RequestBody AdminRoleSaveDTO adminRoleSaveDTO);
 
-    @RequestMapping(value = "/api/admin/role", method = RequestMethod.PUT)
+    @RequestMapping(value = "/role", method = RequestMethod.PUT)
     Result<Boolean> update(@RequestBody AdminRoleUpdateDTO adminRoleUpdateDTO);
 
-    @RequestMapping(value = "/api/admin/role/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/role/{id}", method = RequestMethod.DELETE)
     Result<Boolean> remove(@PathVariable(value = "id") Long id);
 
 }

@@ -3,6 +3,7 @@ package com.github.zuihou.admin.config;
 import com.github.zuihou.base.id.IdGenerate;
 import com.github.zuihou.base.id.SnowflakeIDGenerate;
 import com.github.zuihou.commons.handler.GlobalExceptionHandler;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

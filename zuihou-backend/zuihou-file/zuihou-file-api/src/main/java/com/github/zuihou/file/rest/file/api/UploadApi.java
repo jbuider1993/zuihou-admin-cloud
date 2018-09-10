@@ -3,7 +3,8 @@ package com.github.zuihou.file.rest.file.api;
 import com.github.zuihou.base.Result;
 import com.github.zuihou.file.rest.file.api.hystrix.UploadApiHystrix;
 import com.github.zuihou.file.rest.file.dto.UploadListDTO;
-import org.springframework.cloud.netflix.feign.FeignClient;
+
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 

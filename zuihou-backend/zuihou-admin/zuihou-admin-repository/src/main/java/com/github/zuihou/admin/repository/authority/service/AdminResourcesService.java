@@ -1,7 +1,7 @@
 package com.github.zuihou.admin.repository.authority.service;
 
-import com.github.zuihou.admin.entity.authority.po.AdminResources;
-import com.github.zuihou.admin.repository.authority.example.AdminResourcesExample;
+import com.github.zuihou.admin.entity.authority.po.Resources;
+import com.github.zuihou.admin.repository.authority.example.ResourcesExample;
 import com.github.zuihou.base.service.BaseService;
 
 import java.util.List;
@@ -10,7 +10,7 @@ import java.util.List;
  * @author zuihou
  * @createTime 2017-12-15 11:15
  */
-public interface AdminResourcesService extends BaseService<Long, AdminResources, AdminResourcesExample> {
+public interface AdminResourcesService extends BaseService<Long, Resources, ResourcesExample> {
     /**
      * 检查code是否存在
      *
@@ -38,7 +38,7 @@ public interface AdminResourcesService extends BaseService<Long, AdminResources,
      */
     boolean checkMenu(String appId, Long menuGroupId);
 
-    List<AdminResources> findResources(String appId);
+    List<Resources> findResources(String appId);
 
-    List<AdminResources> findMenu(String appId);
+    List<Resources> findMenu(String appId);
 }

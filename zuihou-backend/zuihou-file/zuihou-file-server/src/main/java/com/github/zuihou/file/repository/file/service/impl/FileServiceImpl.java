@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
  * @createTime 2018-01-26 23:05
  */
 @Service
-public class FileServiceImpl extends BaseServiceImpl
-        <Long, ZhFile, ZhFileExample> implements FileService {
+public class FileServiceImpl extends BaseServiceImpl<Long, ZhFile, ZhFileExample> implements FileService {
     @Autowired
     private ZhFileMapper zhFileMapper;
 

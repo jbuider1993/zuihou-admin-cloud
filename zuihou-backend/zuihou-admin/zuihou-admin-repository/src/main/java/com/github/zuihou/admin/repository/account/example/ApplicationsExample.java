@@ -1,7 +1,9 @@
 package com.github.zuihou.admin.repository.account.example;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ApplicationsExample extends com.github.zuihou.example.BaseExample<ApplicationsExample.Criteria> implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -682,6 +684,66 @@ public class ApplicationsExample extends com.github.zuihou.example.BaseExample<A
             return (Criteria) this;
         }
 
+        public Criteria andIsPublicIsNull() {
+            addCriterion("is_public is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicIsNotNull() {
+            addCriterion("is_public is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicEqualTo(Boolean value) {
+            addCriterion("is_public =", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicNotEqualTo(Boolean value) {
+            addCriterion("is_public <>", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicGreaterThan(Boolean value) {
+            addCriterion("is_public >", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("is_public >=", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicLessThan(Boolean value) {
+            addCriterion("is_public <", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicLessThanOrEqualTo(Boolean value) {
+            addCriterion("is_public <=", value, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicIn(java.util.List<java.lang.Boolean> values) {
+            addCriterion("is_public in", values, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicNotIn(java.util.List<java.lang.Boolean> values) {
+            addCriterion("is_public not in", values, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_public between", value1, value2, "isPublic");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsPublicNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("is_public not between", value1, value2, "isPublic");
+            return (Criteria) this;
+        }
+
         public Criteria andOrderNumIsNull() {
             addCriterion("order_num is null");
             return (Criteria) this;
@@ -1004,7 +1066,7 @@ public class ApplicationsExample extends com.github.zuihou.example.BaseExample<A
     }
 
     /**
-    admin_applicationsaddClassComment 472
+     a_applicationsaddClassComment 472
      *
      * @mbggenerated do_not_delete_during_merge
      */

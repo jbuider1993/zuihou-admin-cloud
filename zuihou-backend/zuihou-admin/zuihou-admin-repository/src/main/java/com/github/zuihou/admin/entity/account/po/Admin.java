@@ -1,7 +1,6 @@
 package com.github.zuihou.admin.entity.account.po;
 
 import com.github.zuihou.base.entity.CommonBaseEntity;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -65,22 +64,36 @@ public class Admin extends CommonBaseEntity<Long> implements Serializable {
     private String logoUrl;
 
     /**
-     * 是否禁用 
-            1：启用
-            0：禁用
+     * 是否禁用
+     1：启用
+     0：禁用
      *
      * @mbggenerated
      */
     private Boolean isEnable;
 
     /**
-     * 是否删除 
-            1：已删除
-            0：未删除
+     * 是否删除
+     1：已删除
+     0：未删除
      *
      * @mbggenerated
      */
     private Boolean isDelete;
+
+    /**
+     * 生日
+     *
+     * @mbggenerated
+     */
+    private String birthday;
+
+    /**
+     * 性别 1男 2女 0未知
+     *
+     * @mbggenerated
+     */
+    private Integer sex;
 
     private String description;
 
@@ -247,9 +260,9 @@ public class Admin extends CommonBaseEntity<Long> implements Serializable {
     }
 
     /**
-     * 是否禁用 
-            1：启用
-            0：禁用
+     * 是否禁用
+     1：启用
+     0：禁用
      *
      * @mbggenerated
      */
@@ -258,9 +271,9 @@ public class Admin extends CommonBaseEntity<Long> implements Serializable {
     }
 
     /**
-     * 是否禁用 
-            1：启用
-            0：禁用
+     * 是否禁用
+     1：启用
+     0：禁用
      *
      * @mbggenerated
      */
@@ -269,9 +282,9 @@ public class Admin extends CommonBaseEntity<Long> implements Serializable {
     }
 
     /**
-     * 是否删除 
-            1：已删除
-            0：未删除
+     * 是否删除
+     1：已删除
+     0：未删除
      *
      * @mbggenerated
      */
@@ -280,14 +293,50 @@ public class Admin extends CommonBaseEntity<Long> implements Serializable {
     }
 
     /**
-     * 是否删除 
-            1：已删除
-            0：未删除
+     * 是否删除
+     1：已删除
+     0：未删除
      *
      * @mbggenerated
      */
     public void setIsDelete(Boolean isDelete) {
         this.isDelete = isDelete;
+    }
+
+    /**
+     * 生日
+     *
+     * @mbggenerated
+     */
+    public String getBirthday() {
+        return birthday;
+    }
+
+    /**
+     * 生日
+     *
+     * @mbggenerated
+     */
+    public void setBirthday(String birthday) {
+        this.birthday = birthday == null ? null : birthday.trim();
+    }
+
+    /**
+     * 性别 1男 2女 0未知
+     *
+     * @mbggenerated
+     */
+    public Integer getSex() {
+        return sex;
+    }
+
+    /**
+     * 性别 1男 2女 0未知
+     *
+     * @mbggenerated
+     */
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
     public String getDescription() {

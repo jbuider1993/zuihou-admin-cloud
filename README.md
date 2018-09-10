@@ -1,9 +1,11 @@
 # zuihou-admin-cloud
 
- 测试master
+- 1, 升级框架版本为 Finchley.M8 版本
+- 2, zipkin、monitor 未测试，其他项目测试启动通过。
+- 3, config 项目暂时弃用， 因为：（开发阶段每次都要启动config，修改配置比较麻烦）
 
 ## 简介：
-基于`SpringCloud(Finchley.M2)`  + `SpringBoot(2.0.0.M2)` 的微服务 SaaS 开发平台，
+基于`SpringCloud(Finchley.M8)`  + `SpringBoot(2.0.0.RELEASE)` 的微服务 SaaS 开发平台，
 具有统一授权、认证后台管理系统，其中包含具备用户管理、配置中心、存储系统、资源权限管理、
 网关API、OpenAPI管理、日志分析、任务和通知等多个模块，
 支持多服务并行开发，可以作为后端服务的开发脚手架。代码简洁，架构清晰，非常适合学习使用。

@@ -1,13 +1,14 @@
 package com.github.zuihou.gateway.filter;
 
 import com.github.zuihou.gateway.config.GateIgnoreProperties;
-import com.github.zuihou.gateway.feign.LogService;
+//import com.github.zuihou.gateway.feign.LogService;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class AdminAccessFilter extends ZuulFilter {
 
-    @Autowired
-    private LogService logService;
+    private static final AntPathMatcher PATH_MATCHER = new AntPathMatcher();
     /**
      * 网关忽略拦截前缀
      */
@@ -35,7 +35,8 @@ public class AdminAccessFilter extends ZuulFilter {
     /**
      * 为zuul设置一个公共的前缀
      */
-    @Value("${zuul.prefix}")
+//    @Value("${zuul.prefix}")
+    @Value("${server.servlet.context-path}")
     private String zuulPrefix;
 
     //@Autowired
@@ -256,17 +257,15 @@ public class AdminAccessFilter extends ZuulFilter {
      * @return
      */
     private boolean isStartWith(String requestUri) {
-        boolean flag = false;
-        //TODO 实现正则匹配
         if (gateIgnoreProperties == null || gateIgnoreProperties.getStartWithList().isEmpty()) {
-            return flag;
+            return false;
         }
         for (String s : gateIgnoreProperties.getStartWithList()) {
-            if (requestUri.startsWith(s)) {
+            if (requestUri.startsWith(s) || PATH_MATCHER.match(s, requestUri)) {
                 return true;
             }
         }
-        return flag;
+        return false;
     }
 
     /**

@@ -16,6 +16,8 @@
     <result column="logo_url" jdbcType="VARCHAR" property="logoUrl" />
     <result column="is_enable" jdbcType="BIT" property="isEnable" />
     <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="create_user" jdbcType="VARCHAR" property="createUser" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -91,7 +93,7 @@
     @mbggenerated
     -->
     id, app_id, type, username, password, name, email, mobile, logo_url, is_enable, is_delete, 
-    description, create_user, create_time, update_user, update_time
+    birthday, sex, description, create_user, create_time, update_user, update_time
   </sql>
   <select id="selectByExample" parameterType="com.github.zuihou.admin.repository.account.example.AdminExample" resultMap="BaseResultMap">
     <!--
@@ -155,13 +157,20 @@
     from a_admin
     where 1=1 and app_id = #{appId,jdbcType=VARCHAR} and id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByAppIdAndId" parameterType="java.lang.Long">
+  <select id="selectAppIdById" parameterType="java.lang.Long" resultType="java.lang.String">
+    <!--
+    @mbggenerated
+    -->
+    select app_id 
+    from a_admin
+    where 1=1 and id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--
     @mbggenerated
     -->
     delete from a_admin
     where id = #{id,jdbcType=BIGINT}
-     and app_id = #{appId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.github.zuihou.admin.repository.account.example.AdminExample">
     <!--
@@ -172,11 +181,28 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <delete id="deleteByAppIdAndIds" parameterType="list">
+  <delete id="deleteByIds" parameterType="list">
     <!--
     @mbggenerated
     -->
-    delete from  a_admin where id in
+    delete from  a_admin where id in 
+    <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
+      #{item}
+    </foreach> 
+  </delete>
+  <delete id="deleteByAppIdAndId" parameterType="map">
+    <!--
+    @mbggenerated
+    -->
+    delete from a_admin
+    where id = #{id,jdbcType=BIGINT}
+     and app_id = #{appId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByAppIdAndIds" parameterType="map">
+    <!--
+    @mbggenerated
+    -->
+    delete from  a_admin where id in 
     <foreach close=")" collection="list" index="index" item="item" open="(" separator=",">
       #{item}
     </foreach> 
@@ -193,7 +219,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </update>
-  <update id="removeByAppIdAndIds" parameterType="com.github.zuihou.admin.entity.account.po.Admin">
+  <update id="removeByAppIdAndIds" parameterType="map">
     <!--
     @mbggenerated
     -->
@@ -205,7 +231,16 @@
   </foreach>
      and app_id = #{appId,jdbcType=VARCHAR}
   </update>
-  <update id="removeByAppIdAndId" parameterType="com.github.zuihou.admin.entity.account.po.Admin">
+  <update id="removeByPrimaryKey" parameterType="java.lang.Long">
+    <!--
+    @mbggenerated
+    -->
+    update a_admin
+    set is_delete = 1 
+
+     where 1=1 and id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="removeByAppIdAndId" parameterType="map">
     <!--
     @mbggenerated
     -->
@@ -219,31 +254,34 @@
     <!--
     @mbggenerated
     -->
-    insert into a_admin (id, app_id, type,
+    insert into a_admin (id, app_id, type, 
       username, password, name, 
       email, mobile, logo_url, 
-      is_enable, is_delete, description, 
-      create_user, create_time, update_user, 
-      update_time)
+      is_enable, is_delete, birthday, 
+      sex, description, create_user, 
+      create_time, update_user, update_time
+      )
     values (#{id,jdbcType=BIGINT}, #{appId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
       #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, 
-      #{isEnable,jdbcType=BIT}, #{isDelete,jdbcType=BIT}, #{description,jdbcType=VARCHAR}, 
-      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{isEnable,jdbcType=BIT}, #{isDelete,jdbcType=BIT}, #{birthday,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="batchInsert" parameterType="java.util.List">
     <!--
     @mbggenerated
     -->
-    insert into a_admin (id, app_id, type, username, password, name, email, mobile, logo_url, is_enable, is_delete, description, create_user, create_time, update_user, update_time ) values
+    insert into a_admin (id, app_id, type, username, password, name, email, mobile, logo_url, is_enable, is_delete, birthday, sex, description, create_user, create_time, update_user, update_time ) values 
     <foreach collection="list" index="index" item="item" separator=",">
       (#{item.id,jdbcType=BIGINT}, #{item.appId,jdbcType=VARCHAR}, #{item.type,jdbcType=INTEGER}, 
         #{item.username,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR}, #{item.name,jdbcType=VARCHAR}, 
         #{item.email,jdbcType=VARCHAR}, #{item.mobile,jdbcType=VARCHAR}, #{item.logoUrl,jdbcType=VARCHAR}, 
-        #{item.isEnable,jdbcType=BIT}, #{item.isDelete,jdbcType=BIT}, #{item.description,jdbcType=VARCHAR}, 
-        #{item.createUser,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR}, 
-        #{item.updateTime,jdbcType=TIMESTAMP})
+        #{item.isEnable,jdbcType=BIT}, #{item.isDelete,jdbcType=BIT}, #{item.birthday,jdbcType=VARCHAR}, 
+        #{item.sex,jdbcType=INTEGER}, #{item.description,jdbcType=VARCHAR}, #{item.createUser,jdbcType=VARCHAR}, 
+        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateUser,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP}
+        )
     </foreach>
   </insert>
   <insert id="insertSelective" parameterType="com.github.zuihou.admin.entity.account.po.Admin">
@@ -284,6 +322,12 @@
       </if>
       <if test="isDelete != null">
         is_delete,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="sex != null">
+        sex,
       </if>
       <if test="description != null">
         description,
@@ -334,6 +378,12 @@
       </if>
       <if test="isDelete != null">
         #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
       </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
@@ -400,6 +450,12 @@
       <if test="record.isDelete != null">
         is_delete = #{record.isDelete,jdbcType=BIT},
       </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
       <if test="record.description != null">
         description = #{record.description,jdbcType=VARCHAR},
       </if>
@@ -436,6 +492,8 @@
       logo_url = #{record.logoUrl,jdbcType=VARCHAR},
       is_enable = #{record.isEnable,jdbcType=BIT},
       is_delete = #{record.isDelete,jdbcType=BIT},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
       description = #{record.description,jdbcType=VARCHAR},
       create_user = #{record.createUser,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -444,6 +502,66 @@
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.github.zuihou.admin.entity.account.po.Admin">
+    <!--
+    @mbggenerated
+    -->
+    update a_admin
+    <set>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null">
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnable != null">
+        is_enable = #{isEnable,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByAppIdAndIdSelective" parameterType="com.github.zuihou.admin.entity.account.po.Admin">
     <!--
@@ -481,6 +599,12 @@
       <if test="isDelete != null">
         is_delete = #{isDelete,jdbcType=BIT},
       </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
@@ -500,6 +624,30 @@
     where id = #{id,jdbcType=BIGINT}
      and app_id = #{appId,jdbcType=VARCHAR}
   </update>
+  <update id="updateByPrimaryKey" parameterType="com.github.zuihou.admin.entity.account.po.Admin">
+    <!--
+    @mbggenerated
+    -->
+    update a_admin
+    set app_id = #{appId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      is_enable = #{isEnable,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
   <update id="updateByAppIdAndId" parameterType="com.github.zuihou.admin.entity.account.po.Admin">
     <!--
     @mbggenerated
@@ -515,6 +663,8 @@
       logo_url = #{logoUrl,jdbcType=VARCHAR},
       is_enable = #{isEnable,jdbcType=BIT},
       is_delete = #{isDelete,jdbcType=BIT},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
       create_user = #{createUser,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},

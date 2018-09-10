@@ -1,8 +1,12 @@
 package com.github.zuihou.admin.rest.account.dto;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * @author zuihou
@@ -24,5 +28,7 @@ public class ApplicationsDTO extends BaseApplicationsDTO implements Serializable
      * @mbggenerated
      */
     private String appSecret;
-    private String createTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 }
