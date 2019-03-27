@@ -4,7 +4,8 @@ package com.github.zuihou.exception;
  * 异常接口类
  * 
  * @author zuihou
- * @version 1.0,
+ * @version 1.1.1, 2016-03-31
+ * @since 1.1.1
  */
 public interface BaseException {
 

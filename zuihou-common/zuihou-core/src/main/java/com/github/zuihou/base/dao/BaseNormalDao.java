@@ -10,15 +10,10 @@ import com.github.zuihou.base.dao.normal.Update;
 import com.github.zuihou.base.entity.BaseEntity;
 import com.github.zuihou.example.BaseExample;
 
-
 /**
- *
- * 字段不含 appid 的类 继承这个dao
- * @auth tangyh
- * @date 2018/09/04
+ * BaseDao，没有app_id 的dao 继承这个类
  */
 public interface BaseNormalDao<I extends Serializable, T extends BaseEntity<I>, TE extends BaseExample>
-        extends Insert<I, T, TE>, Update<I, T, TE>, Delete<I, T, TE>, Remove<I, T, TE>, Select<I, T, TE> {
-
+		extends Insert<I, T, TE>, Update<I, T, TE>, Delete<I, T, TE>, Remove<I, T, TE>, Select<I, T, TE> {
 
 }

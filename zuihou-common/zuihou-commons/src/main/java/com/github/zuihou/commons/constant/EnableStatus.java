@@ -6,16 +6,18 @@ package com.github.zuihou.commons.constant;
  */
 public enum EnableStatus {
 
-    ENABLE(true, "启用"),
-    DISABLE(false, "禁用"),;
+    ENABLE(true, 1, "启用"),
+    DISABLE(false, 0, "禁用"),;
 
     /**  */
     private Boolean val;
+    private int status;
     /**  */
     private String describe;
 
-    EnableStatus(Boolean val, String describe) {
+    EnableStatus(Boolean val, int status, String describe) {
         this.val = val;
+        this.status = status;
         this.describe = describe;
     }
 
@@ -25,6 +27,10 @@ public enum EnableStatus {
 
     public String getDescribe() {
         return describe;
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     public static EnableStatus parse(Boolean val) {

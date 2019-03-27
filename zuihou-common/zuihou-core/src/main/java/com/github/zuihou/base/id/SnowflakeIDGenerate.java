@@ -16,12 +16,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class SnowflakeIDGenerate implements IdGenerate<Long> {
 
+
     /**
      * 最大17bit的序列号是131071
      */
     private final static int MAX_ORDER_NO = 131071;
     /**
-     * 时间戳的掩码
+     * 时间戳的掩码41bit
      */
     private final static long TIME_CODE = Long.MAX_VALUE >>> 22;
     /**
@@ -52,29 +53,32 @@ public class SnowflakeIDGenerate implements IdGenerate<Long> {
 
     @Override
     public Long generate() {
-        /**
-         * 时间戳
-         *  1、先去掉高23bit，保留当前时间的低41bit
-         *  2、将0到41bit移到高位去
-         */
-        long currentTimeMillis = TIME_CODE & (System.currentTimeMillis() - START_TIME) << 22;
+
+        //1.与基准时间对其，得到相对时间
+        long currentTimeMillis = System.currentTimeMillis() - START_TIME;
+        //2.保留相对时间的低41bit
+        currentTimeMillis = currentTimeMillis & TIME_CODE;
+        //3、将1到41bit移到高位去 就是23~63。
+        currentTimeMillis = currentTimeMillis << 22;
 
         /**
          * 序列号自增1和获取
          */
-        int orderNo = this.orderNo.incrementAndGet();
-        if (orderNo > MAX_ORDER_NO) {
-            //如果超过了最大序列号   则重置为0
-            if (!this.orderNo.compareAndSet(orderNo, 0)) {
-                //这里使用cas操作，所以不需要加锁    1、操作失败了   则表示别的线程已经更改了数据，则直接进行自增并获取则可以了
-                orderNo = this.orderNo.incrementAndGet();
-            } else {
-                //操作成功后，则序列号为0了
-                orderNo = 0;
+        int orderNo = this.orderNo.incrementAndGet();  //注意：现增加再取值。
+        do {
+            if (orderNo > MAX_ORDER_NO) {
+                //如果超过了最大序列号   则重置为0
+                if (this.orderNo.compareAndSet(orderNo, 0)) {
+                    //这里使用cas操作，所以不需要加锁    1、操作失败了   则表示别的线程已经更改了数据，则直接进行自增并获取则可以了
+                    orderNo = 0;
+                } else {
+                    orderNo = this.orderNo.incrementAndGet(); //注意：现增加再取值。
+                }
             }
-        }
+        } while (orderNo > MAX_ORDER_NO);
+
         //符号位（1）bit、时间戳（2~42）bit | 序列号（43~59）bit | 机器码（60~64）bit
-        return currentTimeMillis | (orderNo << 14 >>> 9) | MACHINE_CODE;
+        return currentTimeMillis | (orderNo << 5) | MACHINE_CODE;
     }
 
 }

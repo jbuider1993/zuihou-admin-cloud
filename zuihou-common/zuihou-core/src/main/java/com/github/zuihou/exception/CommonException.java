@@ -5,8 +5,9 @@ package com.github.zuihou.exception;
  * 用于在处理非业务逻辑时，进行抛出的异常。
  *
  * @author zuihou
- * @version 1.0
+ * @version 1.0.4, 2016-03-30
  * @see Exception
+ * @since 1.0.4
  */
 public class CommonException extends BaseCheckedException {
 

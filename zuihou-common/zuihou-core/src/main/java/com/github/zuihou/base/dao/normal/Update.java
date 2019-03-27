@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Param;
  * @param <I>
  * @param <T>
  * @param <TE>
- * @author tangyh
+ * @author zuihou
  */
 public interface Update<I extends Serializable, T extends BaseEntity<I>, TE extends BaseExample> {
 	/**

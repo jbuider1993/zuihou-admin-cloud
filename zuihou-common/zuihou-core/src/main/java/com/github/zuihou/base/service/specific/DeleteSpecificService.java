@@ -20,8 +20,7 @@ public interface DeleteSpecificService<I extends Serializable, T extends BaseEnt
     /**
      * 批量物理删除记录
      *
-     * @param appId
-     * @param ids
+     * @param list
      * @return 影响行数
      */
     int deleteByAppIdAndIds(String appId, Collection<I> ids);

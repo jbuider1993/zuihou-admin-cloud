@@ -11,26 +11,66 @@ import com.github.zuihou.exception.code.BaseExceptionCode;
 public enum ExceptionCode implements BaseExceptionCode {
 
     //系统相关 start
-    SYSTEM_BUSY(-1, "系统繁忙，请稍候再试"),
-    SYSTEM_TIMEOUT(-2, "系统超时，请稍候再试"),
+    SUCCESS(0, "成功"),
+    SYSTEM_BUSY(-1, "系统繁忙"),
+    SYSTEM_TIMEOUT(-2, "服务超时"),
+    PARAM_EX(-3, "参数类型解析异常"),
+    SQL_EX(-4, "数据库异常"),
+    NULL_POINT_EX(-5, "空指针异常"),
+    ILLEGALA_RGUMENT_EX(-6, "无效参数异常"),
+    MEDIA_TYPE_EX(-7, "请求类型异常"),
+    LOAD_RESOURCES_ERROR(-8, "加载资源出错"),
+    BASE_VALID_PARAM(-9, "统一验证参数异常"),  //适用于controller层的统一参数验证
+    OPERATION_EX(-10, "操作异常"),    // 适用于 所有方法执行可预知的失败返回
+
+    OK(200, "OK"),
+    BAD_REQUEST(400, "错误的请求"),
+    /**
+     * {@code 401 Unauthorized}.
+     *
+     * @see <a href="http://tools.ietf.org/html/rfc7235#section-3.1">HTTP/1.1: Authentication, section 3.1</a>
+     */
+    UNAUTHORIZED(401, "未经授权"),
+    /**
+     * {@code 404 Not Found}.
+     *
+     * @see <a href="http://tools.ietf.org/html/rfc7231#section-6.5.4">HTTP/1.1: Semantics and Content, section 6.5.4</a>
+     */
+    NOT_FOUND(404, "没有找到资源"),
+    METHOD_NOT_ALLOWED(405, "方法不允许"),
+
+    TOO_MANY_REQUESTS(429, "请求超过次数限制"),
+    INTERNAL_SERVER_ERROR(500, "内部服务错误"),
+    BAD_GATEWAY(502, "网关错误"),
+    GATEWAY_TIMEOUT(504, "网关超时"),
     //系统相关 end
 
-    //DB相关 start
+    //DB相关 10000 start
     DB_REMOVE_ERROR(10000, "无法软删除"),
+    PAGE_OPENAPIREQ(10001, "分页参数,不能为空"),
     //DB相关 end
 
+    REQUIRED_FILE_PARAM_EX(63001, "请求中必须至少包含一个有效文件"),
+
     //jwt token 相关 start
-    //过期
-    JWT_TOKEN_EXPIRED(40001, "token超时，请检查 token 的有效期"),
-    //签名错误
-    JWT_SIGNATURE(40002, "不合法的token，请认真比对 token 的签名"),
-    //token 为空
-    JWT_ILLEGAL_ARGUMENT(40003, "缺少token参数"),
+    JWT_TOKEN_EXPIRED(40001, "token超时，请检查 token 的有效期"),//过期
+    JWT_SIGNATURE(40002, "不合法的token，请认真比对 token 的签名"),//签名错误
+    JWT_ILLEGAL_ARGUMENT(40003, "缺少token参数"),//token 为空
     JWT_GEN_TOKEN_FAIL(40004, "生成token失败"),
     JWT_PARSER_TOKEN_FAIL(40005, "解析token失败"),
-    JWT_APPID_SECRET_INVALID(40006, "获取 access_token 时 AppSecret 错误，或者 AppId 无效！"),
+    JWT_APPID_SECRET_INVALID(40006, "生成token时 AppSecret 错误，或者 AppId 无效！"),
     JWT_APPID_ENABLED(40007, "AppId 已经被禁用！请联系管理员"),
     //jwt token 相关 end
+
+
+    JWT_USER_TOKEN_EXPIRED(40011, "用户token超时，请检查 token 的有效期"),
+    JWT_USER_SIGNATURE(40012, "不合法的用户token，请认真比对 token 的签名"),//签名错误
+    JWT_USER_ILLEGAL_ARGUMENT(40013, "缺少用户token参数"),//token 为空
+    JWT_USER_GEN_TOKEN_FAIL(40014, "生成用户token失败"),
+    JWT_USER_PARSER_TOKEN_FAIL(40015, "解析用户token失败"),
+    JWT_USER_ENABLED(40016, "生成user-token时，发现用户已经被禁用！"),
+    JWT_USER_INVALID(40017, "生成user-token时，检测用户信息无效"),
+
 
     //权限相关 start
     CLIENT_FORBIDDEN(50001, "客户端被禁止!"),
@@ -128,6 +168,17 @@ public enum ExceptionCode implements BaseExceptionCode {
 
     @Override
     public String getMsg() {
+
         return msg;
+    }
+
+    public ExceptionCode build(String msg, Object... param) {
+        this.msg = String.format(msg, param);
+        return this;
+    }
+
+    public ExceptionCode param(Object... param) {
+        this.msg = String.format(msg, param);
+        return this;
     }
 }

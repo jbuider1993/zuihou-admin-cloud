@@ -20,11 +20,10 @@ public interface UpdateSpecificService<I extends Serializable, T extends BaseEnt
 
     /**
      * 批量更新
-     * @param appId 应用id
-     * @param entityList 实体集合
+     * @param list
      * @return 影响行数
      */
-    int updateByAppIdAndId(String appId, Collection<T> entityList);
+    int updateByAppIdAndId(String appId, Collection<T> list);
 
     /**
      * 更新非空字段的值
@@ -35,9 +34,8 @@ public interface UpdateSpecificService<I extends Serializable, T extends BaseEnt
 
 	/**
      * 批量更新非空字段的值
-     * @param appId 应用id
-     * @param entityList 实体集合
+     * @param list
      * @return 影响行数
      */
-    int updateByAppIdAndIdSelective(String appId, Collection<T> entityList);
+    int updateByAppIdAndIdSelective(String appId, Collection<T> list);
 }

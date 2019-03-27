@@ -4,8 +4,9 @@ package com.github.zuihou.exception;
  * 运行期异常基类
  *
  * @author zuihou
- * @version 1.0
+ * @version 1.1.1, 2016-04-01
  * @see    Exception
+ * @since 1.1.1
  */
 public abstract class BaseCheckedException extends Exception implements BaseException {
 

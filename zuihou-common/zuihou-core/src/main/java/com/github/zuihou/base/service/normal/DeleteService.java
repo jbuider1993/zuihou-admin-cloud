@@ -16,12 +16,12 @@ public interface DeleteService<I extends Serializable, T extends BaseEntity<I>, 
      */
     int deleteById(I id);
     
-    
+    int deleteByExample(TE example);
     
     /**
      * 批量物理删除记录
      *
-     * @param ids
+     * @param list
      * @return 影响行数
      */
     int deleteByIds(Collection<I> ids);

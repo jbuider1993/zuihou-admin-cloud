@@ -20,10 +20,10 @@ public interface UpdateService<I extends Serializable, T extends BaseEntity<I>, 
     
     /**
      * 批量更新
-     * @param entityList
+     * @param list
      * @return 影响行数
      */
-    int updateByIds(Collection<T> entityList);
+    int updateByIds(Collection<T> entitys);
     
     /**
      * 更新非空字段的值
@@ -34,8 +34,8 @@ public interface UpdateService<I extends Serializable, T extends BaseEntity<I>, 
     
     /**
      * 批量更新非空字段的值
-     * @param entityList
+     * @param list
      * @return 影响行数
      */
-    int updateByIdSelective(Collection<T> entityList);
+    int updateByIdSelective(Collection<T> entitys);
 }
