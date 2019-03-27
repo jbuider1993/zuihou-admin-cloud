@@ -5,11 +5,11 @@ import com.github.zuihou.admin.entity.account.po.Admin;
 import com.github.zuihou.admin.repository.account.dao.AdminMapper;
 import com.github.zuihou.admin.repository.account.example.AdminExample;
 import com.github.zuihou.admin.repository.account.service.AdminService;
-import com.github.zuihou.base.dao.BaseDao;
-import com.github.zuihou.base.service.impl.BaseNormalServiceImpl;
-import com.github.zuihou.base.service.impl.BaseServiceImpl;
+import com.github.zuihou.base.dao.BaseAllDao;
+import com.github.zuihou.base.service.impl.BaseAllServiceImpl;
 import com.github.zuihou.commons.constant.DeleteStatus;
 import com.github.zuihou.commons.context.CommonConstants;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,14 +19,14 @@ import org.springframework.stereotype.Service;
  * @createTime 2017-12-15 11:13
  */
 @Service
-public class AdminServiceImpl extends BaseServiceImpl<Long, Admin, AdminExample> implements AdminService {
+public class AdminServiceImpl extends BaseAllServiceImpl<Long, Admin, AdminExample> implements AdminService {
     @Autowired
     private AdminMapper adminMapper;
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(CommonConstants.PW_ENCORDER_SALT);
 
 
     @Override
-    protected BaseDao<Long, Admin, AdminExample> getDao() {
+    protected BaseAllDao<Long, Admin, AdminExample> getDao() {
         return adminMapper;
     }
 

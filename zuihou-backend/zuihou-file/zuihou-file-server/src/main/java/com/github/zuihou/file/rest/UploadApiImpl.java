@@ -2,9 +2,9 @@ package com.github.zuihou.file.rest;
 
 import com.github.zuihou.base.Result;
 import com.github.zuihou.commons.constant.DeleteStatus;
-import com.github.zuihou.commons.context.BaseContextHandler;
 import com.github.zuihou.commons.context.CommonConstants;
 import com.github.zuihou.commons.context.DozerUtils;
+import com.github.zuihou.context.BaseContextHandler;
 import com.github.zuihou.file.config.FileProperties;
 import com.github.zuihou.file.constant.IconType;
 import com.github.zuihou.file.entity.file.po.ZhFile;
@@ -76,7 +76,7 @@ public class UploadApiImpl implements UploadApi {
     @RequestMapping(value = "multi", method = RequestMethod.POST)
     public Result<UploadListDTO> uploadMulti(HttpServletRequest request) throws IOException, ServletException {
         String appId = BaseContextHandler.getAppId();
-        String userName = BaseContextHandler.getUserName();
+        String userName = BaseContextHandler.getName();
 
         // Servlet3.0方式上传文件
         Collection<Part> parts = request.getParts();

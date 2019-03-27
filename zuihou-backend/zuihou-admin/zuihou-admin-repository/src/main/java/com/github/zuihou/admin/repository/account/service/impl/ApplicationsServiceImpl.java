@@ -5,8 +5,7 @@ import com.github.zuihou.admin.repository.account.dao.ApplicationsMapper;
 import com.github.zuihou.admin.repository.account.example.ApplicationsExample;
 import com.github.zuihou.admin.repository.account.service.ApplicationsService;
 import com.github.zuihou.admin.utils.UUIDUtils;
-import com.github.zuihou.base.dao.BaseDao;
-import com.github.zuihou.base.service.impl.BaseNormalServiceImpl;
+import com.github.zuihou.base.dao.BaseNormalDao;
 import com.github.zuihou.base.service.impl.BaseServiceImpl;
 import com.github.zuihou.commons.constant.DeleteStatus;
 import com.github.zuihou.commons.constant.EnableStatus;
@@ -23,7 +22,7 @@ public class ApplicationsServiceImpl extends BaseServiceImpl<Long, Applications,
     private ApplicationsMapper applicationsMapper;
 
     @Override
-    protected BaseDao<Long, Applications, ApplicationsExample> getDao() {
+    protected BaseNormalDao<Long, Applications, ApplicationsExample> getDao() {
         return applicationsMapper;
     }
 

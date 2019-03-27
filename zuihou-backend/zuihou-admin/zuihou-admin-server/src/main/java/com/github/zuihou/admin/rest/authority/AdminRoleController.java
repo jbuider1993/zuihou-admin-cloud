@@ -13,9 +13,9 @@ import com.github.zuihou.admin.rest.authority.dto.AdminRoleUpdateDTO;
 import com.github.zuihou.base.Result;
 import com.github.zuihou.commons.constant.DeleteStatus;
 import com.github.zuihou.commons.constant.EnableStatus;
-import com.github.zuihou.commons.context.BaseContextHandler;
 import com.github.zuihou.commons.context.DozerUtils;
 import com.github.zuihou.commons.exception.core.ExceptionCode;
+import com.github.zuihou.context.BaseContextHandler;
 import com.github.zuihou.page.plugins.openapi.OpenApiReq;
 import com.github.zuihou.utils.BizAssert;
 import io.swagger.annotations.Api;
@@ -108,15 +108,15 @@ public class AdminRoleController implements AdminRoleApi {
         assertNotNull(ExceptionCode.ROLE_NULL, adminRoleSaveDto);
         assertNotEmpty(ExceptionCode.ROLE_CODE_EMPTY, adminRoleSaveDto.getCode());
         String appId = BaseContextHandler.getAppId();
-        String userName = BaseContextHandler.getUserName();
+        Long userId = BaseContextHandler.getUserId();
         BizAssert.assertFalse(ExceptionCode.ROLE_CODE_EXIST, adminRoleService.check(appId, adminRoleSaveDto.getCode()));
 
         Role role = dozerUtils.map(adminRoleSaveDto, Role.class);
         role.setAppId(appId);
         role.setIsDelete(DeleteStatus.UN_DELETE.getVal());
         role.setIsEnable(EnableStatus.ENABLE.getVal());
-        role.setCreateUser(userName);
-        role.setUpdateUser(userName);
+        role.setCreateUser(userId);
+        role.setUpdateUser(userId);
         role = adminRoleService.saveSelective(role);
         return Result.success(dozerUtils.map(role, AdminRoleDTO.class));
     }
@@ -133,11 +133,11 @@ public class AdminRoleController implements AdminRoleApi {
         assertNotNull(ExceptionCode.ROLE_ID_NULL, adminRoleUpdateDto.getId());
 
         String appId = BaseContextHandler.getAppId();
-        String userName = BaseContextHandler.getUserName();
+        Long userId = BaseContextHandler.getUserId();
 
         Role role = dozerUtils.map(adminRoleUpdateDto, Role.class);
         role.setAppId(appId);
-        role.setUpdateUser(userName);
+        role.setUpdateUser(userId);
         adminRoleService.updateByAppIdAndIdSelective(appId, role);
         return Result.success(true);
     }

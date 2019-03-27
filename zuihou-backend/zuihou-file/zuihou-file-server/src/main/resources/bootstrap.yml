@@ -47,3 +47,20 @@ spring:
         max-interval: 10000
         multiplier: 2
         max-attempts: 10
+
+
+swagger2:
+  docket-info:
+    file:
+      title: 文件管理服务
+      description: 文件管理服务
+      base-path: ${zuihou.context-path.gate}/file
+      modules:
+        priFile:
+          group-name: priFile
+          packages: com.github.zuihou.file.rest
+  contact-name: zuihou
+  contact-url: http://www.zuihou.com/
+  contact-email: zuihou
+  host: ${zuihou.ip.nginx}:${zuihou.port.nginx}
+

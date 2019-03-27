@@ -7,7 +7,8 @@ import com.github.zuihou.auth.client.config.ServiceAuthConfig;
 import com.github.zuihou.auth.client.jwt.AppAuthUtil;
 import com.github.zuihou.auth.client.jwt.ServiceAuthUtil;
 import com.github.zuihou.auth.common.jwt.IJWTInfo;
-import com.github.zuihou.commons.context.BaseContextHandler;
+import com.github.zuihou.context.BaseContextHandler;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class AppAuthRestInterceptor extends HandlerInterceptorAdapter {
             token = request.getHeader(appAuthConfig.getTokenHeader());
             infoFromToken = appAuthUtil.getInfoFromToken(token);
         }
-        BaseContextHandler.setUserName(infoFromToken.getUserName());
+        BaseContextHandler.setAccount(infoFromToken.getUserName());
         BaseContextHandler.setName(infoFromToken.getName());
         BaseContextHandler.setAdminId(infoFromToken.getAdminId());
         BaseContextHandler.setAppId(infoFromToken.getAppId());

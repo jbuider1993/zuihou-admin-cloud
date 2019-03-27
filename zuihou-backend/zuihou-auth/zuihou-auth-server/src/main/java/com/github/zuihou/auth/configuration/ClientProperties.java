@@ -19,16 +19,4 @@ public class ClientProperties {
     @Value("${client.token-header}")
     private String clientTokenHeader;
 
-    //public String getClientTokenHeader() {
-    //    return clientTokenHeader;
-    //}
-    //
-    //public String getClientSecret() {
-    //    return clientSecret;
-    //}
-    //
-    //public String getClientId() {
-    //    return clientId;
-    //}
-
 }

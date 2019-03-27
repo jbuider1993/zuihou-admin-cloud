@@ -2,7 +2,7 @@ package com.github.zuihou.admin.repository.authority.service;
 
 import com.github.zuihou.admin.entity.authority.po.Role;
 import com.github.zuihou.admin.repository.authority.example.RoleExample;
-import com.github.zuihou.base.service.BaseService;
+import com.github.zuihou.base.service.BaseAllService;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @author zuihou
  * @createTime 2017-12-15 10:45
  */
-public interface AdminRoleService extends BaseService<Long, Role, RoleExample> {
+public interface AdminRoleService extends BaseAllService<Long, Role, RoleExample> {
     /**
      * 检测code是否存在
      * @param appId appId

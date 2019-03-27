@@ -131,8 +131,6 @@ public class AdminController implements AdminApi {
         Applications app = new Applications();
         app.setAppName(adminRegisterDto.getAppName());
         app.setAppType(AppType.APP.toString());
-        app.setUpdateUser(adminRegisterDto.getUsername());
-        app.setCreateUser(adminRegisterDto.getUsername());
         app = applicationsService.saveApp(app);
 
         //4,创建帐号
@@ -141,8 +139,6 @@ public class AdminController implements AdminApi {
         admin.setType(AdminType.GENERAL_ADMIN.getVal());
         admin.setIsDelete(DeleteStatus.UN_DELETE.getVal());
         admin.setIsEnable(EnableStatus.ENABLE.getVal());
-        admin.setUpdateUser(adminRegisterDto.getUsername());
-        admin.setCreateUser(adminRegisterDto.getUsername());
         adminService.save(admin);
 
         //5,初始化角色，权限，菜单等[应该异步]

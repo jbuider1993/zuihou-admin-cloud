@@ -13,10 +13,10 @@ import static com.github.zuihou.file.config.FileProperties.FASTDFS_PREFIX;
  * @author zuihou
  * @createTime 2018-01-24 16:40
  */
-@ConfigurationProperties(prefix = FASTDFS_PREFIX)
 @Data
 @NoArgsConstructor
 @Configuration
+@ConfigurationProperties(prefix = FASTDFS_PREFIX)
 public class FileProperties {
     public static final String FASTDFS_PREFIX = "zuihou.file";
 

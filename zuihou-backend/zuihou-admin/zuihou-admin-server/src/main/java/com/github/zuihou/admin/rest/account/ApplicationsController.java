@@ -10,8 +10,8 @@ import com.github.zuihou.admin.rest.account.api.ApplicationsApi;
 import com.github.zuihou.admin.rest.account.dto.ApplicationsDTO;
 import com.github.zuihou.admin.rest.account.dto.ApplicationsPageDTO;
 import com.github.zuihou.base.Result;
-import com.github.zuihou.commons.context.BaseContextHandler;
 import com.github.zuihou.commons.context.DozerUtils;
+import com.github.zuihou.context.BaseContextHandler;
 import com.github.zuihou.page.plugins.openapi.OpenApiReq;
 
 import io.swagger.annotations.Api;
@@ -59,7 +59,7 @@ public class ApplicationsController implements ApplicationsApi {
     public Result<List<ApplicationsDTO>> findAppIdList(@RequestParam(value = "typeList", required = false) Long[] typeList) {
         //1、获取基础信息
         //type==1:只查应用;type==2:只查服务
-        Long userId = BaseContextHandler.getAdminId();
+        Long userId = BaseContextHandler.getUserId();
 
         //2、查询该角色拥有的资源
 //        List<ApplicationsDTO> appShowDtos = dozerUtils.mapList(applicationService.findAppByAdmin(userId, type), ApplicationsDTO.class);

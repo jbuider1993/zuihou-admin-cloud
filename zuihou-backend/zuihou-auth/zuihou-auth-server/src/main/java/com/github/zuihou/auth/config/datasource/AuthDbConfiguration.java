@@ -1,8 +1,6 @@
 package com.github.zuihou.auth.config.datasource;
 
 
-import com.github.zuihou.core.spring.autoconfigure.datasource.DataSourceFactory;
-import com.github.zuihou.core.spring.autoconfigure.datasource.DataSourceProperties;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
+
+import com.github.zuihou.db.configure.DataSourceFactory;
+import com.github.zuihou.db.configure.DataSourceProperties;
 
 /**
  * 统一平台 中心数据库配置

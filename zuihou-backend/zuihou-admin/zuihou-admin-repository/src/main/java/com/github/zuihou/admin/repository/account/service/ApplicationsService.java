@@ -2,7 +2,7 @@ package com.github.zuihou.admin.repository.account.service;
 
 import com.github.zuihou.admin.entity.account.po.Applications;
 import com.github.zuihou.admin.repository.account.example.ApplicationsExample;
-import com.github.zuihou.base.service.BaseService;
+import com.github.zuihou.base.service.normal.BaseService;
 
 /**
  * @author zuihou

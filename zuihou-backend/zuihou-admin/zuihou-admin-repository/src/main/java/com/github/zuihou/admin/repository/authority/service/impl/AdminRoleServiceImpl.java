@@ -21,12 +21,12 @@ import com.github.zuihou.admin.repository.authority.example.RoleApplicationExamp
 import com.github.zuihou.admin.repository.authority.example.RoleExample;
 import com.github.zuihou.admin.repository.authority.example.RoleResourceExample;
 import com.github.zuihou.admin.repository.authority.service.AdminRoleService;
-import com.github.zuihou.base.dao.BaseDao;
-import com.github.zuihou.base.service.impl.BaseServiceImpl;
+import com.github.zuihou.base.dao.BaseAllDao;
+import com.github.zuihou.base.service.impl.BaseAllServiceImpl;
 import com.github.zuihou.commons.constant.DeleteStatus;
 import com.github.zuihou.commons.constant.EnableStatus;
-import com.github.zuihou.commons.context.BaseContextHandler;
 import com.github.zuihou.commons.context.CommonConstants;
+import com.github.zuihou.context.BaseContextHandler;
 import com.github.zuihou.utils.JSONUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @Slf4j
-public class AdminRoleServiceImpl extends BaseServiceImpl<Long, Role, RoleExample> implements AdminRoleService {
+public class AdminRoleServiceImpl extends BaseAllServiceImpl<Long, Role, RoleExample> implements AdminRoleService {
     @Autowired
     private RoleMapper adminRoleMapper;
     @Autowired
@@ -51,7 +51,7 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, Role, RoleExampl
     private ResourcesMapper adminResourcesMapper;
 
     @Override
-    protected BaseDao<Long, Role, RoleExample> getDao() {
+    protected BaseAllDao<Long, Role, RoleExample> getDao() {
         return adminRoleMapper;
     }
 
@@ -72,7 +72,7 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, Role, RoleExampl
         RoleApplicationExample example = new RoleApplicationExample();
         example.createCriteria().andRoleIdEqualTo(roleId);
         applicationRoleMapper.deleteByExample(example);
-        String userName = BaseContextHandler.getUserName();
+        Long userId = BaseContextHandler.getUserId();
 
         List<RoleApplication> ruList = applicationIdList.stream().map((applicationId) -> {
             RoleApplication ru = new RoleApplication();
@@ -80,8 +80,8 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, Role, RoleExampl
             ru.setRoleId(roleId);
             ru.setCreateTime(new Date());
             ru.setUpdateTime(new Date());
-            ru.setCreateUser(userName);
-            ru.setUpdateUser(userName);
+            ru.setCreateUser(userId);
+            ru.setUpdateUser(userId);
             return ru;
         }).collect(Collectors.toList());
 
@@ -124,7 +124,7 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, Role, RoleExampl
         elementIdList.stream().forEach((id) -> findParentId(resourceIdMap, relationResources, id));
         log.info("relationResources={}", JSONUtils.toJsonString(relationResources, true));
 
-        String userName = BaseContextHandler.getUserName();
+        Long userId = BaseContextHandler.getUserId();
         List<RoleResource> raList = relationResources.stream()
                 .map((resourceId) -> {
                     RoleResource rr = new RoleResource();
@@ -132,8 +132,8 @@ public class AdminRoleServiceImpl extends BaseServiceImpl<Long, Role, RoleExampl
                     rr.setResourceId(resourceId);
                     rr.setUpdateTime(new Date());
                     rr.setCreateTime(new Date());
-                    rr.setCreateUser(userName);
-                    rr.setUpdateUser(userName);
+                    rr.setCreateUser(userId);
+                    rr.setUpdateUser(userId);
                     return rr;
                 }).collect(Collectors.toList());
         if (!raList.isEmpty()) {

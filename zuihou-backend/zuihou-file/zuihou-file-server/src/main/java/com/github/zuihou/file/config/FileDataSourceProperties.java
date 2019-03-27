@@ -5,7 +5,8 @@ package com.github.zuihou.file.config;
  * @createTime 2018-01-25 22:48
  */
 
-import com.github.zuihou.core.spring.autoconfigure.datasource.DataSourceProperties;
+import com.github.zuihou.db.configure.DataSourceProperties;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**

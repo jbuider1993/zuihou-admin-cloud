@@ -2,7 +2,8 @@ package com.github.zuihou.auth.client.interceptor;
 
 
 import com.github.zuihou.auth.client.config.AppAuthConfig;
-import com.github.zuihou.commons.context.BaseContextHandler;
+import com.github.zuihou.context.BaseContextHandler;
+
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

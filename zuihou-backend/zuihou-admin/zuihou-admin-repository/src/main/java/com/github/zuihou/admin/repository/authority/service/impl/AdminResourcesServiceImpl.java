@@ -7,8 +7,8 @@ import com.github.zuihou.admin.entity.authority.po.Resources;
 import com.github.zuihou.admin.repository.authority.dao.ResourcesMapper;
 import com.github.zuihou.admin.repository.authority.example.ResourcesExample;
 import com.github.zuihou.admin.repository.authority.service.AdminResourcesService;
-import com.github.zuihou.base.dao.BaseDao;
-import com.github.zuihou.base.service.impl.BaseServiceImpl;
+import com.github.zuihou.base.dao.BaseAllDao;
+import com.github.zuihou.base.service.impl.BaseAllServiceImpl;
 import com.github.zuihou.commons.constant.DeleteStatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +19,12 @@ import org.springframework.stereotype.Service;
  * @createTime 2017-12-15 11:16
  */
 @Service
-public class AdminResourcesServiceImpl extends BaseServiceImpl<Long, Resources, ResourcesExample> implements AdminResourcesService {
+public class AdminResourcesServiceImpl extends BaseAllServiceImpl<Long, Resources, ResourcesExample> implements AdminResourcesService {
     @Autowired
     private ResourcesMapper resourcesMapper;
 
     @Override
-    protected BaseDao<Long, Resources, ResourcesExample> getDao() {
+    protected BaseAllDao<Long, Resources, ResourcesExample> getDao() {
         return resourcesMapper;
     }
 

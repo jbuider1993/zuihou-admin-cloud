@@ -103,12 +103,12 @@ public class ShiroAuthorizingRealm extends AuthorizingRealm {
         String password = new String(upToken.getPassword());
         Result<AccountDTO> result = adminApi.getAccount(username);
         if (!result.isSuccess()) {
-            log.warn("获取用户失败:{}", result.getErrmsg());
-            throw new AccountException("账号或密码错误:" + result.getErrmsg());
+            log.warn("获取用户失败:{}", result.getMsg());
+            throw new AccountException("账号或密码错误:" + result.getMsg());
         }
         Result<TokenDTO> tokenResult = authTokenApi.login(username);
         if (!tokenResult.isSuccess()) {
-            throw new AccountException("获取token失败:" + tokenResult.getErrmsg());
+            throw new AccountException("获取token失败:" + tokenResult.getMsg());
         }
 
         AccountDTO admin = result.getData();

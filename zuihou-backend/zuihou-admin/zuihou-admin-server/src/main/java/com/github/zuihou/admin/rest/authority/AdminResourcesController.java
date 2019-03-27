@@ -22,10 +22,10 @@ import com.github.zuihou.admin.utils.TreeUtil;
 import com.github.zuihou.base.Result;
 import com.github.zuihou.commons.constant.DeleteStatus;
 import com.github.zuihou.commons.constant.EnableStatus;
-import com.github.zuihou.commons.context.BaseContextHandler;
 import com.github.zuihou.commons.context.CommonConstants;
 import com.github.zuihou.commons.context.DozerUtils;
 import com.github.zuihou.commons.exception.core.ExceptionCode;
+import com.github.zuihou.context.BaseContextHandler;
 import com.github.zuihou.page.plugins.openapi.OpenApiReq;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
@@ -273,8 +273,8 @@ public class AdminResourcesController implements AdminResourcesApi {
 
         //5, 保存
         menu.setAppId(appId);
-        menu.setCreateUser(BaseContextHandler.getUserName());
-        menu.setUpdateUser(BaseContextHandler.getUserName());
+        menu.setCreateUser(BaseContextHandler.getUserId());
+        menu.setUpdateUser(BaseContextHandler.getUserId());
         if (menu.getIsEnable() == null) {
             menu.setIsEnable(EnableStatus.ENABLE.getVal());
         }
@@ -296,7 +296,7 @@ public class AdminResourcesController implements AdminResourcesApi {
 
         String appId = BaseContextHandler.getAppId();
         Resources menu = dozerUtils.map(menuDto, Resources.class);
-        menu.setUpdateUser(BaseContextHandler.getUserName());
+        menu.setUpdateUser(BaseContextHandler.getUserId());
         adminResourcesService.updateByAppIdAndIdSelective(appId, menu);
         return Result.success(true);
     }
@@ -379,8 +379,8 @@ public class AdminResourcesController implements AdminResourcesApi {
         Resources resources = dozerUtils.map(resourceDto, Resources.class);
         resources.setAppId(appId);
         resources.setMenuGroupCode(menu.getMenuGroupCode());
-        resources.setCreateUser(BaseContextHandler.getUserName());
-        resources.setUpdateUser(BaseContextHandler.getUserName());
+        resources.setCreateUser(BaseContextHandler.getUserId());
+        resources.setUpdateUser(BaseContextHandler.getUserId());
         if (resources.getIsEnable() == null) {
             resources.setIsEnable(EnableStatus.ENABLE.getVal());
         }
@@ -402,7 +402,7 @@ public class AdminResourcesController implements AdminResourcesApi {
 
         String appId = BaseContextHandler.getAppId();
         Resources resources = dozerUtils.map(resourceDto, Resources.class);
-        resources.setUpdateUser(BaseContextHandler.getUserName());
+        resources.setUpdateUser(BaseContextHandler.getUserId());
         adminResourcesService.updateByAppIdAndIdSelective(appId, resources);
         return Result.success(true);
     }

@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ResourcesMapper extends com.github.zuihou.base.dao.BaseDao<Long, com.github.zuihou.admin.entity.authority.po.Resources, com.github.zuihou.admin.repository.authority.example.ResourcesExample> {
+public interface ResourcesMapper extends com.github.zuihou.base.dao.BaseAllDao<Long, com.github.zuihou.admin.entity.authority.po.Resources, com.github.zuihou.admin.repository.authority.example.ResourcesExample> {
     /**
      * 查询子菜单和子资源数量
      *

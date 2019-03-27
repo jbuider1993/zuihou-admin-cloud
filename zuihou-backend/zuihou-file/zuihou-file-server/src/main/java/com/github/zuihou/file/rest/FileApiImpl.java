@@ -5,10 +5,10 @@ import com.github.pagehelper.PageInfo;
 import com.github.zuihou.auth.client.annotation.IgnoreAppToken;
 import com.github.zuihou.base.Result;
 import com.github.zuihou.commons.constant.DeleteStatus;
-import com.github.zuihou.commons.context.BaseContextHandler;
 import com.github.zuihou.commons.context.CommonConstants;
 import com.github.zuihou.commons.context.DozerUtils;
 import com.github.zuihou.commons.exception.core.ExceptionCode;
+import com.github.zuihou.context.BaseContextHandler;
 import com.github.zuihou.file.config.FileProperties;
 import com.github.zuihou.file.constant.IconType;
 import com.github.zuihou.file.entity.file.po.ZhFile;
@@ -87,7 +87,7 @@ public class FileApiImpl implements FileApi {
         BizAssert.assertNotNull(ExceptionCode.FOLDER_NULL, folderSaveDto);
         BizAssert.assertNotNull(ExceptionCode.FOLDER_NAME_EMPTY, folderSaveDto.getSubmittedFileName());
         String appId = BaseContextHandler.getAppId();
-        String userName = BaseContextHandler.getUserName();
+        String userName = BaseContextHandler.getName();
 
 
         ZhFile folder = dozerUtils.map2(folderSaveDto, ZhFile.class);
@@ -162,7 +162,7 @@ public class FileApiImpl implements FileApi {
     public Result<FileListDTO> upload(@RequestParam(value = "folderId") Long folderId, HttpServletRequest request) throws Exception {
         BizAssert.assertNotNull(ExceptionCode.FILE_FOLDER_NULL, folderId);
         String appId = BaseContextHandler.getAppId();
-        String userName = BaseContextHandler.getUserName();
+        String userName = BaseContextHandler.getName();
         String treePath = "";
         if (folderId != null && folderId > 0) {
             ZhFile folder = fileService.getByAppIdAndId(appId, folderId);
@@ -194,7 +194,7 @@ public class FileApiImpl implements FileApi {
                 try {
                     //日期文件夹
                     String secDir = LocalDate.now().format(DTF);
-                    // /home/tyh/APP_ID/YYYY/MM
+                    // /home/zuihou/APP_ID/YYYY/MM
                     String relativePath = Paths.get(appId, secDir).toString();
                     String absolutePath = Paths.get(fileProperties.getUploadPathPrefix(), relativePath).toString();
 
@@ -250,7 +250,7 @@ public class FileApiImpl implements FileApi {
         BizAssert.assertNotNull(ExceptionCode.FILE_NULL, fileUpdateDTO);
         BizAssert.assertNotNull(ExceptionCode.FILE_NULL, fileUpdateDTO.getId());
         String appId = BaseContextHandler.getAppId();
-        String userName = BaseContextHandler.getUserName();
+        String userName = BaseContextHandler.getName();
         ZhFile file = dozerUtils.map2(fileUpdateDTO, ZhFile.class);
         String parentTreePath = "";
         if (fileUpdateDTO.getFolderId() != null) {

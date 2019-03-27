@@ -2,7 +2,7 @@ package com.github.zuihou.admin.repository.authority.service;
 
 import com.github.zuihou.admin.entity.authority.po.Resources;
 import com.github.zuihou.admin.repository.authority.example.ResourcesExample;
-import com.github.zuihou.base.service.BaseService;
+import com.github.zuihou.base.service.BaseAllService;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import java.util.List;
  * @author zuihou
  * @createTime 2017-12-15 11:15
  */
-public interface AdminResourcesService extends BaseService<Long, Resources, ResourcesExample> {
+public interface AdminResourcesService extends BaseAllService<Long, Resources, ResourcesExample> {
     /**
      * 检查code是否存在
      *

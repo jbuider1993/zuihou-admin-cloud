@@ -1,10 +1,11 @@
 package com.github.zuihou.auth.common.jwt;
 
 
-import com.github.zuihou.commons.context.CommonConstants;
 import com.github.zuihou.commons.exception.core.ExceptionCode;
-import com.github.zuihou.commons.utils.StringHelper;
+import com.github.zuihou.context.BaseContextConstants;
 import com.github.zuihou.exception.BizException;
+import com.github.zuihou.utils.basetype.StringHelper;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
@@ -43,9 +44,9 @@ public class JWTHelper {
                     Jwts.builder()
                             //设置主题
                             .setSubject(jwtInfo.getUserName())
-                            .claim(CommonConstants.JWT_KEY_ADMIN_ID, jwtInfo.getAdminId())
-                            .claim(CommonConstants.JWT_KEY_NAME, jwtInfo.getName())
-                            .claim(CommonConstants.JWT_KEY_APP_ID, jwtInfo.getAppId())
+                            .claim(BaseContextConstants.JWT_USER_KEY_USER_ID, jwtInfo.getAdminId())
+                            .claim(BaseContextConstants.JWT_USER_KEY_NAME, jwtInfo.getName())
+                            .claim(BaseContextConstants.JWT_APP_KEY_APP_ID, jwtInfo.getAppId())
                             .setExpiration(DateTime.now().plusSeconds(expire).toDate())
                             //设置算法（必须）
                             .signWith(SignatureAlgorithm.RS256, rsaKeyHelper.getPrivateKey(priKeyPath))
@@ -101,7 +102,7 @@ public class JWTHelper {
     public static IJWTInfo getInfoFromToken(String token, String pubKeyPath) throws BizException {
         Jws<Claims> claimsJws = parserToken(token, pubKeyPath);
         Claims body = claimsJws.getBody();
-        String adminId = StringHelper.getObjectValue(body.get(CommonConstants.JWT_KEY_ADMIN_ID));
+        String adminId = StringHelper.getObjectValue(body.get(BaseContextConstants.JWT_USER_KEY_USER_ID));
         Long aId = -1L;
         try {
             aId = adminId == null || adminId.isEmpty() ? -1L : Long.valueOf(adminId);
@@ -110,8 +111,8 @@ public class JWTHelper {
         }
         return new JWTInfo(body.getSubject(),
                 aId,
-                StringHelper.getObjectValue(body.get(CommonConstants.JWT_KEY_NAME)),
-                StringHelper.getObjectValue(body.get(CommonConstants.JWT_KEY_APP_ID))
+                StringHelper.getObjectValue(body.get(BaseContextConstants.JWT_USER_KEY_NAME)),
+                StringHelper.getObjectValue(body.get(BaseContextConstants.JWT_APP_KEY_APP_ID))
         );
     }
 
